@@ -1,10 +1,9 @@
 ---
-
 title: "Project Charta"
 author: "Team 04"
 date: "2026-03-18"
 format: html
-------------
+---
 
 # Project Charta
 
