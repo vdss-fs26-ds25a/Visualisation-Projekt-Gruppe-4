@@ -1,0 +1,247 @@
+---
+title: "Project Charta"
+author: "Team 04"
+date: "2026-03-18"
+format: html
+---
+
+# Project Charta
+
+## Context and Scope
+
+Das vorliegende Visualisierungsprojekt ist im Bereich Energieverbrauch und dessen Verteilung angesiedelt. Grundlage bildet ein historischer Datensatz zum Endenergieverbrauch verschiedener Energieträger über den Zeitraum von 1910 bis 2024 in der Schweiz. Alle Werte sind in Terajoule (TJ) angegeben und liegen in jährlicher Aggregation vor.
+
+Die betrachteten Energieträger umfassen:
+
+* Erdölbrennstoffe
+* Treibstoffe
+* Elektrizität
+* Gas
+* Kohle
+* Holzenergie
+* Fernwärme
+* Abfälle
+* Übrige erneuerbare Energien
+
+Der Datensatz ermöglicht eine tiefere Analyse struktureller Veränderungen im Energiesystem, insbesondere den Übergang von fossilen zu erneuerbaren Energieträgern sowie die Entwicklung einzelner Energieformen über mehr als ein Jahrhundert.
+
+Ziel des Projekts ist es, diese Entwicklungen visuell aufzubereiten und verständlich darzustellen. Dabei stehen folgende Fragestellungen im Zentrum:
+
+* Wie hat sich der Gesamtenergieverbrauch zwischen 1910 und 2024 entwickelt
+* Wie hat sich die relative Bedeutung einzelner Energieträger im Zeitverlauf verändert
+* Wann lassen sich strukturelle Brüche oder Übergänge im Energiesystem erkennen
+* Wie unterscheiden sich fossile und erneuerbare Energieträger in ihrer Entwicklung
+
+Der erwartete Nutzen liegt in der transparenten und intuitiven Darstellung langfristiger Energietrends sowie in der Unterstützung datenbasierter Argumentationen im Kontext Energiepolitik, Nachhaltigkeit und Transformation.
+
+Das Visualisierungsprodukt wird als interaktive Webanwendung (z B Dashboard oder Data Story) auf einer GitHub Page bereitgestellt.
+
+## Project Objectives and Success Criteria
+
+### Objectives (Stakeholder Perspective)
+
+* Ermöglichung eines klaren Überblicks über die zeitliche Entwicklung des Endenergieverbrauchs von 1910 bis 2024
+* Unterstützung des Vergleichs zwischen verschiedenen Energieträgern (insbesondere fossile vs erneuerbare)
+* Sichtbarmachung struktureller Veränderungen und Trends im Energiesystem
+* Bereitstellung einer intuitiven Möglichkeit zur Exploration einzelner Energieträger und Zeiträume
+
+### Success Criteria
+
+**Qualitativ:**
+
+* Nutzer können zentrale Trends (z B Wachstum, Rückgang, Strukturwandel) korrekt identifizieren
+* Unterschiede zwischen Energieträgern werden klar verständlich dargestellt
+* Die Visualisierung unterstützt sowohl explorative als auch erklärende Nutzung
+
+**Quantitativ:**
+
+* Mindestens 4 klare Erkenntnisse werden visuell hervorgehoben (z B Übergang von Kohle zu Elektrizität)
+* Mindestens 2 Interaktionsmöglichkeiten (z B Filter oder Auswahl einzelner Energieträger)
+* Alle Visualisierungen sind reproduzierbar und konsistent dokumentiert
+
+### Out of Scope
+
+* Vorhersagen zukünftiger Energieverbräuche
+* Integration zusätzlicher externer Datensätze
+* Detailanalysen auf regionaler oder sektoraler Ebene
+
+## Stakeholder Analysis
+
+Relevante Stakeholder umfassen:
+
+* Dozierende: Bewertung der methodischen Qualität, Nachvollziehbarkeit und Visualisierung
+* Projektteam: Analyse, Umsetzung und Dokumentation
+* Interessierte Öffentlichkeit: Nutzung der Visualisierung zur Informationsgewinnung über Energieentwicklung
+
+Die Dozierenden fungieren als Auftraggeber und Evaluatoren. Die Öffentlichkeit stellt die primäre Zielgruppe dar, deren Informationsbedürfnisse durch das Produkt adressiert werden.
+
+## User Analysis
+
+### Persona 1: Student der Wirtschaft oder Umweltwissenschaften
+
+* Domain Expertise: mittel
+* Data Literacy: mittel
+* Technische Umgebung: Laptop, Webbrowser
+* Nutzung: punktuell (z B für Projekte oder Präsentationen)
+
+**User Tasks**
+
+* Analyse historischer Energieentwicklungen
+* Vorbereitung von Präsentationen oder Berichten
+* Vergleich von Energieträgern
+
+**Pains**
+
+* Rohdaten sind schwer interpretierbar
+* Fehlende Übersicht über langfristige Trends
+* Schwierigkeiten beim Vergleich vieler Kategorien gleichzeitig
+
+**Gains**
+
+* Klare Zeitreihenvisualisierungen
+* Möglichkeit einzelne Energieträger ein und auszublenden
+* Schnelles Erkennen von Wendepunkten und Trends
+
+**User Stories**
+
+* Als Student möchte ich den Energieverbrauch einzelner Energieträger über die Zeit sehen, um Trends zu verstehen
+* Als Student möchte ich Energieträger vergleichen können, um Unterschiede zu analysieren
+* Als Student möchte ich zentrale Entwicklungen schnell erkennen, um sie in Präsentationen zu verwenden
+
+### Persona 2: Fachinteressierte Person im Bereich Energie oder Politik
+
+* Domain Expertise: hoch
+* Data Literacy: mittel bis hoch
+* Technische Umgebung: Desktop oder Tablet
+* Nutzung: regelmässig
+
+**User Tasks**
+
+* Analyse von Strukturwandel im Energiesystem
+* Kommunikation von Erkenntnissen an Dritte
+* Unterstützung von Argumentationen
+
+**Pains**
+
+* Fehlende visuelle Aufbereitung historischer Daten
+* Schwierige Vergleichbarkeit von Energieträgern
+* Zeitaufwendige manuelle Analyse
+
+**Gains**
+
+* Interaktive Exploration von Zeiträumen
+* Klare Unterscheidung zwischen fossilen und erneuerbaren Energien
+* Visualisierung langfristiger Entwicklungen auf einen Blick
+
+**User Stories**
+
+* Als Fachperson möchte ich den Anteil erneuerbarer Energien über die Zeit sehen, um den Fortschritt zu bewerten
+* Als Fachperson möchte ich strukturelle Brüche identifizieren, um politische Massnahmen zu begründen
+* Als Fachperson möchte ich Visualisierungen direkt nutzen können, um sie in Berichten einzubauen
+
+## Situation Assessment
+
+### Ressourcen
+
+* Historischer Datensatz (1910 bis 2024, mehrere Energieträger, Einheit TJ)
+* Team von drei Personen
+* Tools: R, Python, Pandas, Matplotlib oder Plotly, Quarto, GitHub
+
+### Einschränkungen
+
+* Begrenzte Projektzeit im Semester
+* Fokus auf Reproduzierbarkeit und Dokumentation
+* Keine Nutzung externer Tools ohne Begründung
+
+### Risiken
+
+* Unklare Datenstruktur oder fehlende Werte
+* Überladung der Visualisierung durch zu viele Kategorien
+* Zeitdruck bei Implementierung und Dokumentation
+
+## Visualization Concept
+
+### Product Form
+
+Interaktives Dashboard mit ergänzender Data Story
+
+### Visual Encodings
+
+* Liniendiagramme für Zeitreihen (zentrale Darstellung)
+* Gestapelte Flächendiagramme zur Darstellung der Zusammensetzung des Gesamtverbrauchs
+* Balkendiagramme für ausgewählte Vergleichsjahre
+
+### Interactivity
+
+* Auswahl einzelner Energieträger (ein und ausblenden)
+* Auswahl von Zeiträumen (z B Fokus auf bestimmte Jahrzehnte)
+* Tooltips mit exakten Werten in TJ
+
+### Narrative and Annotation
+
+* Einführung in den Datensatz und Kontext
+* Hervorhebung wichtiger Zeitpunkte (z B starke Zunahmen oder Rückgänge)
+* Annotationen bei erkennbaren Strukturbrüchen
+
+### Target Medium
+
+* Veröffentlichung als GitHub Page oder Streamlit App
+
+### Value Contribution
+
+**Cognitive Value**
+
+* Unterstützt das Erkennen langfristiger Trends über mehr als 100 Jahre
+* Ermöglicht Vergleich mehrerer Energieträger gleichzeitig
+* Hebt Strukturveränderungen im Energiesystem hervor
+
+**Communicative Value**
+
+* Klare Darstellung komplexer Zeitreihen
+* Unterstützung der Vermittlung von Energieentwicklungen an unterschiedliche Zielgruppen
+
+**Experiential Value**
+
+* Interaktive Exploration fördert Engagement
+* Visuell konsistente Darstellung stärkt Vertrauen in die Daten
+
+## Project Plan
+
+```{mermaid}
+gantt
+    title Project Plan
+    dateFormat YYYY-MM-DD
+    tickInterval 5day
+
+    section Projektverständnis
+        Kontextanalyse :a1, 2026-03-20, 2d
+        Stakeholder und User Analyse :a2, 2026-03-22, 3d
+        Projektcharta finalisieren :a3, 2026-03-25, 2d
+
+    section Datenphase
+        Datenaufbereitung :a4, 2026-03-27, 3d
+        Explorative Analyse :a5, 2026-03-30, 3d
+
+    section Visualisierung
+        Konzept und Design :a6, 2026-04-02, 3d
+        Implementierung :a7, 2026-04-05, 5d
+
+    section Abschluss
+        Dokumentation :a8, 2026-04-10, 2d
+        Präsentation vorbereiten :a9, 2026-04-12, 2d
+```
+
+## Roles and Contact Details
+
+* Silvan
+  Rolle: Datenaufbereitung und Analyse
+  Aufgaben: Datenbereinigung, explorative Analyse
+
+* Salomon
+  Rolle: Visualisierung und Design
+  Aufgaben: Erstellung der Diagramme und Interaktivität
+
+* Fabian
+  Rolle: Dokumentation und Integration
+  Aufgaben: Quarto Dokumentation, GitHub Setup
+
