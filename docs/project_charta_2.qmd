@@ -1,5 +1,5 @@
 ---
-title: "Project Charta"
+title: "Project Charta neu"
 author: "Team 04"
 date: "2026-03-18"
 format: html
