@@ -9,10 +9,32 @@ format: html
 
 ## Context and Scope
 
+Das vorliegende Visualisierungsprojekt ist im Bereich Stromgverbrauch im Vergleich über das Jahr insbesonderes des Winters über die Jahre angesiedelt. Grundlage bildet ein Datensatz zusammengesetzt aus verschieden Datenpunkte in der Schweiz.
 
 Das Visualisierungsprodukt wird als interaktive Webanwendung (z B Dashboard oder Data Story) auf einer GitHub Page bereitgestellt.
 
+Die betrachteten Energieträger umfassen:
+
+* Jahr
+* Monat
+* Temperatur
+* Stromerzeugnisse
+* Stromverbrauch
+* Bevölkerung
+* PLACEHOLDER
+
+* Wie Verbreitet sich der Stromverbrauch im Jahr aus.
+* Wie stark sind die unterschiede zwischen den Monaten.
+* Ist der Verbrauch von Strom proportional wachsend im Vergleich zu der steigenden Bevölkerung.
+
+Der erwartete Nutzen liegt in der transparenten und intuitiven Darstellung ###PLACEHOLDER 
+
+Ziel des Projekts ist es, diese Entwicklungen visuell aufzubereiten und verständlich darzustellen. Dabei stehen folgende Fragestellungen im Zentrum:
+
+
 ## Project Objectives and Success Criteria
+
+
 
 ### Objectives (Stakeholder Perspective)
 
@@ -173,4 +195,5 @@ gantt
 * Fabian
   Rolle: Dokumentation und Integration
   Aufgaben: Quarto Dokumentation, GitHub Setup
+
 
