@@ -34,16 +34,22 @@ Ziel des Projekts ist es, diese Entwicklungen visuell aufzubereiten und verstän
 
 ## Project Objectives and Success Criteria
 
-
-
 ### Objectives (Stakeholder Perspective)
 
-
+* Klarer Überblick über den Stromverbrauch im Jahr verteilt und dessen Entwicklung über die
+  Jahre hinweg.
+* Sichtbarmachung Veränderungen und Trends im Saisonalen Kontext
+* Bereitstellung eines explorativen Tools welches erlaubt den nutzer die Daten visuell
+  unterstützt zu analysieren.
+* PLACEHOLDER
 
 ### Success Criteria
 
 **Qualitativ:**
 
+* Nutzer können durch ein effizientes Dashboard visuell effizient eine auf Daten gestütze
+  Analyse bilden.
+* 
 
 
 **Quantitativ:**
