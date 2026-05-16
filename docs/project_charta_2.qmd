@@ -49,62 +49,87 @@ Ziel des Projekts ist es, diese Entwicklungen visuell aufzubereiten und verstän
 
 * Nutzer können durch ein effizientes Dashboard visuell effizient eine auf Daten gestütze
   Analyse bilden.
-* 
+* Diagramme sind übersichtlich und ermöglicht es den nutzer für sich selbst trends zu erkennen.
+* Das Dashboard ist strukturiert aufgebaut und erlaubt eine passende Analyse.
 
 
 **Quantitativ:**
 
-
+* Mindestens 4 klare Erkenntnisse werden visuell hervorgehoben
+* Mindestens 2 Interaktionsmöglichkeiten
+* Alle Visualisierungen sind reproduzierbar und konsistent dokumentiert
 
 ### Out of Scope
 
-
+* keine mobile App
+* keine Echtzeitdaten
+* Keine Vorhersagemodelle oder Maschine learning
 
 ## Stakeholder Analysis
 
-
+* Dozierende: Bewertung der methodischen Qualität, Nachvollziehbarkeit und Visualisierung
+* Andere Studierende der Zhaw mit Interesse an Strom in der Schweiz
+* Energieinteressierte der Öffentlichkeit (ein bisschen Vorwissen)
 
 ## User Analysis
 
 ### Persona 1: Student der Wirtschaft oder Umweltwissenschaften
 
-
+* 
+* 
+* 
 
 **User Tasks**
 
-
+* Vergleich von Aktuellen saisonal Daten
+* Nutzung von Diagrammen für Präsentation
+* 
 
 **Pains**
 
-
+* fehlende Übersicht
+* 
+* 
 
 **Gains**
 
-
+* schnelle Übersicht
+* einfach verständliche Visualisierungen
+* 
 
 **User Stories**
 
-
+* 
+* 
 
 ### Persona 2: Fachinteressierte Person im Bereich Energie oder Politik
 
-
+* 
+* 
+* 
 
 **User Tasks**
 
-
+* 
+* 
+* 
 
 **Pains**
 
-
+* 
+* 
+* 
 
 **Gains**
 
-
+* 
+* 
+* 
 
 **User Stories**
 
-
+* 
+* 
 
 ## Situation Assessment
 
@@ -134,15 +159,21 @@ Interaktives Dashboard mit ergänzender Data Story
 
 ### Visual Encodings
 
-
+* Liniencharts für Zeitliche Entwicklung
+* Heatmaps für Saisonale Muster
+* Balkendiagramme für Monatsvergleiche
 
 ### Interactivity
 
-
+* Hover-effekte mit Zusatzinformationen
+* Dynamische Legenden
+* Vergleichsansicht mehrer Jahre
 
 ### Narrative and Annotation
 
-
+* Erklärung Wichtiger Trends direkt im Dashboard
+* Kontextinformationen zu Energiekrisen oder Wetterextremen
+* 
 
 ### Target Medium
 
@@ -152,15 +183,18 @@ Interaktives Dashboard mit ergänzender Data Story
 
 **Cognitive Value**
 
-
+* Erleichterte Mustererkennung
+* Unterstützt datenbasiertes Verständnis
 
 **Communicative Value**
 
-
+* Unterstützung von Diskussionen über Energieverbrauch
+* Einfache Präsentationen von Trends
 
 **Experiential Value**
 
-
+* interaktive Exploration motiviert den nutzer
+* 
 
 ## Project Plan
 
