@@ -3,14 +3,13 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-st.set_page_config(page_title="Dashboard", layout="wide")
+st.set_page_config(page_title="Strom Dashboard", layout="wide")
 
-st.title("Strom Dashboard")
-
-#Daten laden
+# data load
 df = pd.read_excel("Data_Strom.xlsx", sheet_name=0)
 
-#Daten
+df = df[df["Jahr"] != 2026]
+
 month_map = {
     "jan": 1, "feb": 2, "mar": 3, "apr": 4,
     "may": 5, "jun": 6, "jul": 7, "aug": 8,
@@ -32,7 +31,12 @@ df["Bevölkerung"] = (
     .str.replace(" ", "", regex=False)
     .astype(float))
 
-#FILTER
+# Seiten
+page = st.sidebar.selectbox(
+    "Seite auswählen",
+    ["Start / Overview", "Analyse 1", "Analyse 2"])
+
+# globale Filter
 st.sidebar.header("Filter")
 
 jahr_min = int(df["Jahr"].min())
@@ -44,65 +48,116 @@ jahr_range = st.sidebar.slider(
     max_value=jahr_max,
     value=(jahr_min, jahr_max))
 
-monate = st.sidebar.multiselect(
-    "Monate auswählen",
-    options=df["Monat"].unique(),
-    default=df["Monat"].unique())
-
-#data filter
 df_filtered = df[
     (df["Jahr"] >= jahr_range[0]) &
-    (df["Jahr"] <= jahr_range[1]) &
-    (df["Monat"].isin(monate))]
+    (df["Jahr"] <= jahr_range[1])]
 
-st.write(f"Datenpunkte: {len(df_filtered)}")
+# Seite 1 - übersicht
+if page == "Start / Overview":
 
-col1, col2 = st.columns(2)
+    st.title("Strom Dashboard – Überblick")
 
-# Tempreratur
-with col1:
-    st.subheader("Temperatur")
+    st.write("""
+    Diese Seite zeigt den geglätteten Stromverbrauch über die Zeit (1990–2025).
+    Die Darstellung hebt strukturelle Phasen hervor.
+    """)
 
-    fig, ax = plt.subplots()
-    ax.plot(df_filtered["Datum"], df_filtered["Temperatur (C°)"])
+    st.info("""
+    Phasen:
+    - 1990–1999: stabile Entwicklung  
+    - 2000–2008: Wachstum  
+    - 2009–2025: Sättigung / Volatilität  
+    """)
 
-    ax.set_xlabel("Datum")
-    ax.set_ylabel("°C")
-    ax.set_title("Temperatur")
-
-    plt.xticks(rotation=45)
-    st.pyplot(fig)
-
-# Strombilanz
-with col2:
-    st.subheader("Strombilanz")
-
-    df_filtered["Bilanz"] = (
-        df_filtered["Stromerzeugnisse"] -
-        df_filtered["Stromverbrauch"])
+    df_filtered = df_filtered.sort_values("Datum")
+    df_filtered["Trend"] = df_filtered["Stromverbrauch"].rolling(12).mean()
 
     fig, ax = plt.subplots()
-    ax.plot(df_filtered["Datum"], df_filtered["Bilanz"])
 
-    ax.axhline(0, color="black", linewidth=1)
+    # Hauptlinie
+    ax.plot(df_filtered["Datum"],
+            df_filtered["Trend"],
+            color="black",
+            linewidth=2,
+            label="Stromverbrauch (Trend)")
 
-    ax.set_title("Erzeugung - Verbrauch")
-    ax.set_xlabel("Datum")
-    ax.set_ylabel("Differenz")
+    # Phasen
+    ax.axvspan(pd.Timestamp("1990-01-01"),
+               pd.Timestamp("1999-12-01"),
+               color="green",
+               alpha=0.1,
+               label="1990–1999")
 
-    plt.xticks(rotation=45)
+    ax.axvspan(pd.Timestamp("2000-01-01"),
+               pd.Timestamp("2008-12-01"),
+               color="orange",
+               alpha=0.1,
+               label="2000–2008")
+
+    ax.axvspan(pd.Timestamp("2009-01-01"),
+               pd.Timestamp("2025-12-01"),
+               color="red",
+               alpha=0.1,
+               label="2009–2025")
+
+    # WICHTIG: doppelte Labels entfernen
+    handles, labels = ax.get_legend_handles_labels()
+    by_label = dict(zip(labels, handles))
+    ax.legend(by_label.values(), by_label.keys())
+
+    # Styling
+    ax.set_title("Stromverbrauch über Zeit (Phasenmodell)")
+    ax.set_xlabel("Jahre")
+    ax.set_ylabel("Stromverbrauch (geglättet)")
+
+    st.pyplot(fig)
+    
+# Seite 2 - Analyse 1 -> Trend
+elif page == "Analyse 1":
+
+    st.title("Analyse 1 – Langfristige Entwicklung")
+
+    df_year = df_filtered.groupby("Jahr")[[
+        "Stromverbrauch",
+        "Temperatur (C°)"
+    ]].mean().reset_index()
+
+    fig, ax1 = plt.subplots()
+
+    # Verbrauch
+    ax1.plot(df_year["Jahr"],
+             df_year["Stromverbrauch"],
+             label="Stromverbrauch",
+             color="blue")
+
+    ax1.set_xlabel("Jahr")
+    ax1.set_ylabel("Stromverbrauch", color="blue")
+
+    # Temperatur 
+    ax2 = ax1.twinx()
+    ax2.plot(df_year["Jahr"],
+             df_year["Temperatur (C°)"],
+             label="Temperatur",
+             color="red")
+
+    ax2.set_ylabel("Temperatur (°C)", color="red")
+
     st.pyplot(fig)
 
-# Bevölkerung
-st.subheader("Bevölkerung")
+# Seite 3 - Analyse 2
+elif page == "Analyse 2":
 
-df_pop = df_filtered.groupby("Jahr")["Bevölkerung"].max().reset_index()
+    st.title("Analyse 2 – Temperatur vs Verbrauch")
 
-fig, ax = plt.subplots()
-ax.bar(df_pop["Jahr"], df_pop["Bevölkerung"])
+    fig, ax = plt.subplots()
 
-ax.set_title("Bevölkerung pro Jahr")
-ax.set_xlabel("Jahr")
-ax.set_ylabel("Einwohner")
+    ax.scatter(
+        df_filtered["Temperatur (C°)"],
+        df_filtered["Stromverbrauch"],
+        alpha=0.5)
 
-st.pyplot(fig)
+    ax.set_title("Zusammenhang Temperatur vs Stromverbrauch")
+    ax.set_xlabel("Temperatur (°C)")
+    ax.set_ylabel("Stromverbrauch")
+
+    st.pyplot(fig)
