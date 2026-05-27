@@ -9,7 +9,7 @@ format: html
 
 ## Context and Scope
 
-Das vorliegende Visualisierungsprojekt ist im Bereich Energie und Nachhaltigkeit angesiedelt. Grundlage bildet ein historischer Datensatz zum Endenergieverbrauch verschiedener Energieträger über den Zeitraum von 1910 bis 2014. Alle Werte sind in Terajoule (TJ) angegeben und liegen in jährlicher Aggregation vor.
+Das vorliegende Visualisierungsprojekt ist im Bereich Energieverbrauch und dessen Verteilung angesiedelt. Grundlage bildet ein historischer Datensatz zum Endenergieverbrauch verschiedener Energieträger über den Zeitraum von 1910 bis 2024 in der Schweiz. Alle Werte sind in Terajoule (TJ) angegeben und liegen in jährlicher Aggregation vor.
 
 Die betrachteten Energieträger umfassen:
 
@@ -23,11 +23,11 @@ Die betrachteten Energieträger umfassen:
 * Abfälle
 * Übrige erneuerbare Energien
 
-Der Datensatz ermöglicht eine langfristige Analyse struktureller Veränderungen im Energiesystem, insbesondere den Übergang von fossilen zu erneuerbaren Energieträgern sowie die Entwicklung einzelner Energieformen über mehr als ein Jahrhundert.
+Der Datensatz ermöglicht eine tiefere Analyse struktureller Veränderungen im Energiesystem, insbesondere den Übergang von fossilen zu erneuerbaren Energieträgern sowie die Entwicklung einzelner Energieformen über mehr als ein Jahrhundert.
 
 Ziel des Projekts ist es, diese Entwicklungen visuell aufzubereiten und verständlich darzustellen. Dabei stehen folgende Fragestellungen im Zentrum:
 
-* Wie hat sich der Gesamtenergieverbrauch zwischen 1910 und 2014 entwickelt
+* Wie hat sich der Gesamtenergieverbrauch zwischen 1910 und 2024 entwickelt
 * Wie hat sich die relative Bedeutung einzelner Energieträger im Zeitverlauf verändert
 * Wann lassen sich strukturelle Brüche oder Übergänge im Energiesystem erkennen
 * Wie unterscheiden sich fossile und erneuerbare Energieträger in ihrer Entwicklung
@@ -40,7 +40,7 @@ Das Visualisierungsprodukt wird als interaktive Webanwendung (z B Dashboard oder
 
 ### Objectives (Stakeholder Perspective)
 
-* Ermöglichung eines klaren Überblicks über die zeitliche Entwicklung des Endenergieverbrauchs von 1910 bis 2014
+* Ermöglichung eines klaren Überblicks über die zeitliche Entwicklung des Endenergieverbrauchs von 1910 bis 2024
 * Unterstützung des Vergleichs zwischen verschiedenen Energieträgern (insbesondere fossile vs erneuerbare)
 * Sichtbarmachung struktureller Veränderungen und Trends im Energiesystem
 * Bereitstellung einer intuitiven Möglichkeit zur Exploration einzelner Energieträger und Zeiträume
@@ -143,7 +143,7 @@ Die Dozierenden fungieren als Auftraggeber und Evaluatoren. Die Öffentlichkeit 
 
 ### Ressourcen
 
-* Historischer Datensatz (1910 bis 2014, mehrere Energieträger, Einheit TJ)
+* Historischer Datensatz (1910 bis 2024, mehrere Energieträger, Einheit TJ)
 * Team von drei Personen
 * Tools: R, Python, Pandas, Matplotlib oder Plotly, Quarto, GitHub
 

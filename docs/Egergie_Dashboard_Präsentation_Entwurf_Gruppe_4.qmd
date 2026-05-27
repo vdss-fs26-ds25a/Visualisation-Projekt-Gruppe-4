@@ -1,0 +1,152 @@
+---
+title: "Visualisierungsprojekt – Stromverbrauch Schweiz"
+author: "Gruppe 04"
+format: revealjs
+theme: serif
+---
+
+# Thema & Hauptziel
+
+## **Thema**
+
+Stromverbrauch und Stromerzeugung in der Schweiz\
+→ zeitliche und saisonale Muster sichtbar machen
+
+## **Hauptziel**
+
+Ein interaktives Dashboard, das:
+
+-   Trends über die Jahre zeigt\
+-   saisonale Unterschiede klar macht\
+-   Zusammenhänge (Temperatur, Bevölkerung, Verbrauch) explorierbar macht
+
+------------------------------------------------------------------------
+
+# Leitfragen
+
+-   Wie verteilt sich der Stromverbrauch über das Jahr?\
+-   Wie stark unterscheiden sich die Monate?\
+-   Wie entwickeln sich Verbrauch und Bevölkerung im Vergleich?\
+-   Welche saisonalen Muster sind stabil, welche verändern sich?
+
+------------------------------------------------------------------------
+
+# Zielgruppe
+
+## **Primäre Zielgruppen**
+
+-   Studierende (Wirtschaft, Umwelt, Energie)
+-   Energieinteressierte Öffentlichkeit
+-   Fachpersonen aus Energie/Politik
+
+## **Bedürfnisse**
+
+-   schnelle Übersicht\
+-   klare Trends\
+-   einfache Interaktion\
+-   reproduzierbare Visualisierungen
+
+------------------------------------------------------------------------
+
+# Narrative Elemente
+
+## **Narrative Leitidee**
+
+„Wie verändert sich unser Stromverbrauch – und was treibt diese Veränderungen?“
+
+## **Umsetzung**
+
+-   **Visualisierungen:** Liniencharts, Heatmaps, Balken\
+-   **Interaktivität:** Hover, Filter, Vergleichsansichten\
+-   **Dramatisierung:** Fokus auf Wintermonate, Energiekrisen, Temperaturabweichungen\
+-   **Rhetorik:** klare Trendbegriffe („Winterpeak“, „Sommerdelle“)\
+-   **Annotationen:** kurze Hinweise direkt im Dashboard
+
+------------------------------------------------------------------------
+
+# Erwartetes Feedback
+
+## **1. Verständlichkeit**
+
+-   Ist die Story klar?\
+-   Sind die Visualisierungen intuitiv?
+
+## **2. Interaktivität**
+
+-   Reichen die Interaktionen?\
+-   Fehlen Filter oder Vergleiche?
+
+## **3. Visual Encoding**
+
+-   Passen Diagrammtypen, Farben, Achsen?
+
+## **4. Scope & Fokus**
+
+-   Ist der Umfang sinnvoll?\
+-   Fehlt ein wichtiger Aspekt?
+
+------------------------------------------------------------------------
+
+# Projektcharta – Kurzüberblick
+
+## **Scope**
+
+-   Stromverbrauch & -erzeugung\
+-   Temperatur\
+-   Bevölkerung\
+-   Jahres- & Monatsdaten Schweiz
+
+## **Produkt**
+
+Interaktives Dashboard + Data Story\
+(GitHub Page oder Streamlit)
+
+------------------------------------------------------------------------
+
+# Success Criteria
+
+## **Qualitativ**
+
+-   intuitive Visualisierungen\
+-   klare Trendkommunikation\
+-   strukturierter Aufbau
+
+## **Quantitativ**
+
+-   ≥ 4 visuelle Erkenntnisse\
+-   ≥ 2 Interaktionsmöglichkeiten\
+-   reproduzierbar & dokumentiert
+
+------------------------------------------------------------------------
+
+# Risiken
+
+-   unklare Datenstruktur\
+-   fehlende Werte\
+-   Überladung der Visualisierungen\
+-   Zeitdruck
+
+------------------------------------------------------------------------
+
+# Team & Rollen
+
+## **Silvan – Datenaufbereitung & Analyse**
+
+Datenbereinigung, EDA, Strukturierung
+
+## **Salomon – Visualisierung & Design**
+
+Diagramme, Interaktivität, Dashboard
+
+## **Fabian – Dokumentation & Integration**
+
+Quarto, GitHub, Struktur & Zusammenführung
+
+------------------------------------------------------------------------
+
+# Danke!
+
+Feedback willkommen – besonders zu: - Verständlichkeit\
+- Interaktivität\
+- Visual Encoding\
+- Fokus & Scope

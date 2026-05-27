@@ -7,7 +7,7 @@ language:
   section-title-appendices: "Appendix"
 
 website:
-  title: "Energie Projekt"
+  title: "Strom"
   search: true
   sidebar:
     style: "floating"
@@ -15,6 +15,7 @@ website:
     contents:
       - index.qmd
       - project_charta.qmd
+      - project_charta_2.qmd
       - data_report.qmd
       - viz_design_report.qmd
       - evaluation.qmd
