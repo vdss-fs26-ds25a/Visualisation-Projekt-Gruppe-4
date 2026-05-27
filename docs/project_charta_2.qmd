@@ -9,55 +9,53 @@ format: html
 
 ## Context and Scope
 
-Das vorliegende Visualisierungsprojekt ist im Bereich Stromgverbrauch im Vergleich über das Jahr insbesonderes des Winters über die Jahre angesiedelt. Grundlage bildet ein Datensatz zusammengesetzt aus verschieden Datenpunkte in der Schweiz.
+Das vorliegende Visualisierungsprojekt untersucht die Entwicklung des Stromverbrauchs in der Schweiz im Zeitraum von 1990 bis 2025. Im Fokus stehen saisonale Unterschiede sowie langfristige Veränderungen des Verbrauchsverhaltens. Grundlage bildet ein zusammengeführter Datensatz aus öffentlich verfügbaren Schweizer Energie- und Wetterdaten.
 
-Das Visualisierungsprodukt wird als interaktive Webanwendung (z B Dashboard oder Data Story) auf einer GitHub Page bereitgestellt.
+Das Visualisierungsprodukt wird als interaktives Dashboard mit Streamlit umgesetzt und online bereitgestellt.
 
 Die betrachteten Energieträger umfassen:
 
 * Jahr
 * Monat
 * Temperatur
-* Stromerzeugnisse
+* Stromerzeugnung
 * Stromverbrauch
-* Bevölkerung
-* PLACEHOLDER
+* Bevölkerungsentwicklung
 
-* Wie Verbreitet sich der Stromverbrauch im Jahr aus.
-* Wie stark sind die unterschiede zwischen den Monaten.
-* Ist der Verbrauch von Strom proportional wachsend im Vergleich zu der steigenden Bevölkerung.
 
-Der erwartete Nutzen liegt in der transparenten und intuitiven Darstellung ###PLACEHOLDER 
+* Wie verändert sich der Stromverbrauch im Verlauf eines Jahres?
+* Welche saisonalen Unterschiede lassen sich zwischen den Monaten erkennen?
+* Wie entwickelt sich der Stromverbrauch im Verhältnis zur Bevölkerungsentwicklung?
 
-Ziel des Projekts ist es, diese Entwicklungen visuell aufzubereiten und verständlich darzustellen. Dabei stehen folgende Fragestellungen im Zentrum:
+Der erwartete Nutzen liegt in einer transparenten und intuitiven Darstellung langfristiger Entwicklungen und saisonaler Muster des Schweizer Stromverbrauchs.
+
+
+Ziel des Projekts ist es, diese Entwicklungen visuell aufzubereiten und für Nutzerinnen und Nutzer verständlich darzustellen.
 
 
 ## Project Objectives and Success Criteria
 
 ### Objectives (Stakeholder Perspective)
 
-* Klarer Überblick über den Stromverbrauch im Jahr verteilt und dessen Entwicklung über die
-  Jahre hinweg.
-* Sichtbarmachung Veränderungen und Trends im Saisonalen Kontext
-* Bereitstellung eines explorativen Tools welches erlaubt den nutzer die Daten visuell
-  unterstützt zu analysieren.
-* PLACEHOLDER
+* Darstellung des Stromverbrauchs in der Schweiz über die Jahre hinweg.
+* Sichtbarmachung saisonaler Unterschiede und langfristiger Entwicklungen.
+* Bereitstellung eines interaktiven Dashboards zur explorativen Analyse der Daten.
+
 
 ### Success Criteria
 
 **Qualitativ:**
 
-* Nutzer können durch ein effizientes Dashboard visuell effizient eine auf Daten gestütze
-  Analyse bilden.
-* Diagramme sind übersichtlich und ermöglicht es den nutzer für sich selbst trends zu erkennen.
-* Das Dashboard ist strukturiert aufgebaut und erlaubt eine passende Analyse.
+* Das Dashboard ermöglicht eine verständliche Analyse der Stromdaten.
+* Die Visualisierungen sind übersichtlich und nachvollziehbar aufgebaut
+* Nutzer können saisonale Muster und langfristige Trends erkennen.
 
 
 **Quantitativ:**
 
-* Mindestens 4 klare Erkenntnisse werden visuell hervorgehoben
-* Mindestens 2 Interaktionsmöglichkeiten
-* Alle Visualisierungen sind reproduzierbar und konsistent dokumentiert
+* Mindestens 4 aussagekräftige Visualisierungen werden umgesetzt.
+* Die Datenaufbereitung und Visualisierungen sind reproduzierbar dokumentiert.
+* Das Dashboard enthält mindestens eine zeitliche Trendanalyse und einen saisonalen Vergleich.
 
 ### Out of Scope
 
@@ -67,35 +65,35 @@ Ziel des Projekts ist es, diese Entwicklungen visuell aufzubereiten und verstän
 
 ## Stakeholder Analysis
 
-* Dozierende: Bewertung der methodischen Qualität, Nachvollziehbarkeit und Visualisierung
-* Andere Studierende der Zhaw mit Interesse an Strom in der Schweiz
-* Energieinteressierte der Öffentlichkeit (ein bisschen Vorwissen)
+* Dozierende: Bewertung der methodischen Qualität, Datenaufbereitung und Visualisierung.
+* Studierende: Nutzung des Dashboards zur Exploration von Strom- und Wetterdaten.
+* Interessierte Öffentlichkeit: Einfache und verständliche Darstellung des Stromverbrauchs in     der Schweiz.
 
 ## User Analysis
 
 ### Persona 1: Student der Wirtschaft oder Umweltwissenschaften
 
-* 
-* 
-* 
+* Studiert an einer Fachhochschule oder Universität
+* Besitzt grundlegende Kenntnisse im Umgang mit Daten und Diagrammen
+* Interessiert sich für Energieverbrauch, Nachhaltigkeit und gesellschaftliche Entwicklungen
 
 **User Tasks**
 
-* Vergleich von Aktuellen saisonal Daten
-* Nutzung von Diagrammen für Präsentation
-* 
+* Vergleich saisonaler Unterschiede im Stromverbrauch
+* Nutzung von Diagrammen für Präsentationen oder Studienarbeiten
+* Exploration des Zusammenhangs zwischen Temperatur und Stromverbrauch
 
 **Pains**
 
-* fehlende Übersicht
-* 
-* 
+* Grosse Datenmengen sind schwer überschaubar
+* Trends sind in Rohdaten schwierig erkennbar
+* Unterschiedliche Einflussfaktoren sind oft nicht direkt vergleichbar
 
 **Gains**
 
-* schnelle Übersicht
-* einfach verständliche Visualisierungen
-* 
+* Schnelle Übersicht über wichtige Entwicklungen
+* Einfach verständliche und interaktive Visualisierungen
+* Unterstützung bei Präsentationen und Analysen
 
 **User Stories**
 
@@ -104,27 +102,27 @@ Ziel des Projekts ist es, diese Entwicklungen visuell aufzubereiten und verstän
 
 ### Persona 2: Fachinteressierte Person im Bereich Energie oder Politik
 
-* 
-* 
-* 
+* Verfolgt Entwicklungen im Energiesektor und gesellschaftliche Trends
+* Besitzt Interesse an Stromverbrauch und Energieversorgung in der Schweiz
+* Nutzt Visualisierungen zur Informationsgewinnung und Einordnung von Entwicklungen
 
 **User Tasks**
 
-* 
-* 
-* 
+* Beobachtung langfristiger Entwicklungen des Stromverbrauchs
+* Analyse von Zusammenhängen zwischen Temperatur und Stromverbrauch
+* Vergleich von Winter- und Sommerperioden
 
 **Pains**
 
-* 
-* 
-* 
+* Komplexe Energiedaten sind oft schwer verständlich aufbereitet
+* Fehlende interaktive Möglichkeiten in klassischen Statistiken  
+* Saisonale Muster sind in Tabellen schwer erkennbar
 
 **Gains**
 
-* 
-* 
-* 
+* Verständliche Darstellung komplexer Daten
+* Interaktive Exploration verschiedener Zeiträume
+* Bessere Einordnung von Entwicklungen im Strombereich 
 
 **User Stories**
 
@@ -135,66 +133,67 @@ Ziel des Projekts ist es, diese Entwicklungen visuell aufzubereiten und verstän
 
 ### Ressourcen
 
-* zusammengefügter Datensatz in Bezug auf Strom
+* Zusammengeführter Datensatz zum Stromverbrauch und zur Stromerzeugung in der Schweiz
 * Team von drei Personen
-* Tools: R, Python, Pandas, Matplotlib oder Plotly, Quarto, GitHub
+* Tools und Technologien: Python, Pandas, Matplotlib, Streamlit, GitHub und Quarto
 
 ### Einschränkungen
 
-* Begrenzte Projektzeit im Semester
-* Fokus auf Reproduzierbarkeit und Dokumentation
-* Keine Nutzung externer Tools ohne Begründung
+* Begrenzte Projektzeit innerhalb des Semesters
+* Fokus auf Reproduzierbarkeit und nachvollziehbare Dokumentation
+* Keine Nutzung externer Datenquellen ohne klare Begründung
 
 ### Risiken
 
-* Unklare Datenstruktur oder fehlende Werte
-* Überladung der Visualisierung durch zu viele Kategorien
-* Zeitdruck bei Implementierung und Dokumentation
+* Fehlende oder inkonsistente Datenwerte
+* Überladung des Dashboards durch zu viele Visualisierungen
+* Zeitdruck bei Implementierung und Finalisierung
 
 ## Visualization Concept
 
 ### Product Form
 
-Interaktives Dashboard mit ergänzender Data Story
+Interaktives Dashboard 
 
 ### Visual Encodings
 
-* Liniencharts für Zeitliche Entwicklung
-* Heatmaps für Saisonale Muster
-* Balkendiagramme für Monatsvergleiche
+* Liniencharts für zeitliche Entwicklungen
+* Scatterplots für Zusammenhänge zwischen Variablen
+* Balkendiagramme für saisonale und monatliche Vergleiche
 
 ### Interactivity
 
-* Hover-effekte mit Zusatzinformationen
+* Filter nach Jahren und Zeiträumen
 * Dynamische Legenden
-* Vergleichsansicht mehrer Jahre
+* Hover-Informationen zu einzelnen Datenpunkten
 
 ### Narrative and Annotation
 
-* Erklärung Wichtiger Trends direkt im Dashboard
-* Kontextinformationen zu Energiekrisen oder Wetterextremen
-* 
+* Erklärung wichtiger Trends direkt im Dashboard
+* Kurze Kontextinformationen zu saisonalen Entwicklungen
+* Hervorhebung auffälliger Veränderungen im Zeitverlauf
 
 ### Target Medium
 
-* Veröffentlichung als GitHub Page oder Streamlit App
+* Veröffentlichung als Streamlit-Webanwendung
+* Bereitstellung über GitHub
 
 ### Value Contribution
 
 **Cognitive Value**
 
-* Erleichterte Mustererkennung
-* Unterstützt datenbasiertes Verständnis
+* Erleichterte Erkennung saisonaler Muster und Trends
+* Unterstützung eines datenbasierten Verständnisses des Stromverbrauchs
 
 **Communicative Value**
 
-* Unterstützung von Diskussionen über Energieverbrauch
-* Einfache Präsentationen von Trends
+* UUnterstützung von Präsentationen und Diskussionen
+* Verständliche Kommunikation komplexer Stromdaten
 
 **Experiential Value**
 
-* interaktive Exploration motiviert den nutzer
-* 
+* Interaktive Exploration motiviert zur eigenständigen Analyse
+* Benutzer können unterschiedliche Zeiträume flexibel vergleichen
 
 ## Project Plan
 
