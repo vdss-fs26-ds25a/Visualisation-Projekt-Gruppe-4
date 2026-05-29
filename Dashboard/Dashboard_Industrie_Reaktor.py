@@ -362,7 +362,7 @@ with st.sidebar:
     st.markdown("### MODUL")
     page = st.selectbox(
         " ",
-        ["Übersicht", "Verbrauch × Temperatur", "Korrelation"],
+        ["Übersicht", "Verbrauch × Temperatur", "Korrelation", "Effizienz / Heizen"],
         label_visibility="collapsed",
     )
 
@@ -408,6 +408,8 @@ prod_col         = prod_cols[0] if prod_cols else "Stromerzeugnisse"
 kkw_gwh          = calc_kkw(df_filtered, df, selected_seasons)
 total_produktion = df_filtered[prod_col].sum()
 kkw_anteil       = (kkw_gwh / total_produktion * 100) if total_produktion > 0 else 0
+n_monate         = len(df_filtered)
+kkw_pro_monat    = (kkw_gwh / n_monate) if n_monate > 0 else 0
 
 # Auslastung anhand des Kernkraft-Anteils an der Gesamtproduktion
 # (z. B. nur Winter ~44 % → hoch, nur Sommer ~26 % → gering)
@@ -431,7 +433,8 @@ status_ph.markdown(
 # Kernkraft-Box (wird im Seitenkopf rechts neben dem Titel gerendert)
 KKW_BOX_HTML = f"""
 <div style="
-    margin-top: 2.0rem; margin-left: auto; width: max-content; max-width: 100%;
+    margin-top: 2.0rem; margin-left: auto; width: max-content; max-width: none;
+    white-space: nowrap;
     background: #21252b; border: 1px solid #ff8c42; border-radius: 8px;
     padding: 0.55rem 1.2rem; font-family: 'Inter', sans-serif;
     box-shadow: 0 3px 14px rgba(255,140,66,0.40);
@@ -440,15 +443,17 @@ KKW_BOX_HTML = f"""
          text-transform:uppercase; font-weight:700;">⚛️ Kernkraft</div>
     <div style="color:#fff; font-size:1.35rem; font-weight:700;
          font-family:'Space Grotesk',sans-serif; line-height:1.2;">
-         {kkw_gwh:,.0f} GWh</div>
-    <div style="color:#9ca3af; font-size:0.74rem;">{kkw_anteil:.1f} % der Produktion</div>
+         {kkw_gwh:,.0f} GWh<span style="color:#9ca3af; font-size:0.74rem;
+         font-weight:400; font-family:'Inter',sans-serif;"> (gesamt)</span></div>
+    <div style="color:#9ca3af; font-size:0.74rem;">Ø {kkw_pro_monat:,.0f} GWh / Monat</div>
+    <div style="color:#9ca3af; font-size:0.74rem;">{kkw_anteil:.1f} % der Gesamtproduktion in diesem Zeitraum</div>
 </div>
 """
 
 
 def render_header(meta, title, subtitle):
     """Seitenkopf: Titelblock links, Kernkraft-Box rechts daneben."""
-    c_left, c_right = st.columns([2.6, 1])
+    c_left, c_right = st.columns([2.2, 1.1])
     with c_left:
         st.markdown(f"<div class='meta-label'>{meta}</div>", unsafe_allow_html=True)
         st.title(title)
@@ -727,6 +732,90 @@ elif page == "Korrelation":
         fig.update_layout(legend=dict(itemclick=False, itemdoubleclick=False))
     st.plotly_chart(fig, use_container_width=True,
                     config={"displayModeBar": False, "scrollZoom": False})
+
+
+# ── PAGE: EFFIZIENZ / HEIZEN ──────────────────────────────────────────────────
+elif page == "Effizienz / Heizen":
+    render_header(
+        "▌ REAKTOR 4 · WITTERUNGSBEREINIGT",
+        "Effizienz & Heizbedarf",
+        "Wurden wir sparsamer — oder war es nur wärmer? Der Heizbedarf "
+        "(≈ Heizgradtage aus den Temperaturdaten) rechnet den Wettereffekt heraus. "
+        "Kennzahl = Stromverbrauch pro Kopf je Heizbedarf-Einheit. Sinkt sie, "
+        "brauchen wir bei gleicher Kälte weniger Strom — ein echter Effizienzgewinn.",
+    )
+
+    # Nur Heizmonate (echter Heizbedarf) → Effizienz = Verbrauch/Kopf je Heizbedarf
+    df_eff = df_filtered[df_filtered["Heizbedarf"] > 50].copy()
+    df_eff = df_eff.dropna(subset=["Stromverbrauch_pro_Kopf", "Heizbedarf"])
+    df_eff["Effizienz"] = df_eff["Stromverbrauch_pro_Kopf"] / df_eff["Heizbedarf"]
+
+    if len(df_eff) < 2 or df_eff["Jahr"].nunique() < 2:
+        st.warning(
+            "Zu wenig Heizmonate im aktuellen Filter. Bitte mindestens eine kältere "
+            "Jahreszeit (❄️ Winter / 🍂 Herbst / 🌸 Frühling) und einen breiteren "
+            "Zeitraum auswählen."
+        )
+    else:
+        g = (df_eff.groupby("Jahr")
+                   .agg(Effizienz=("Effizienz", "mean"),
+                        Heizbedarf=("Heizbedarf", "mean"),
+                        ProKopf=("Stromverbrauch_pro_Kopf", "mean"))
+                   .reset_index())
+
+        # KPIs: erste vs. letzte verfügbare Dekade
+        early   = g[g["Jahr"] <= g["Jahr"].min() + 9]["Effizienz"].mean()
+        late    = g[g["Jahr"] >= g["Jahr"].max() - 9]["Effizienz"].mean()
+        delta   = (late - early) / early * 100 if early else 0
+        h_early = g[g["Jahr"] <= g["Jahr"].min() + 9]["Heizbedarf"].mean()
+        h_late  = g[g["Jahr"] >= g["Jahr"].max() - 9]["Heizbedarf"].mean()
+
+        c1, c2, c3 = st.columns(3)
+        with c1:
+            st.metric("Effizienz · frühe Jahre", f"{early:.2f}",
+                      help="kWh/Kopf je Heizbedarf-Einheit")
+        with c2:
+            st.metric("Effizienz · letzte Jahre", f"{late:.2f}",
+                      delta=f"{delta:+.1f} %", delta_color="inverse",
+                      help="negativ = sparsamer bei gleicher Kälte")
+        with c3:
+            st.metric("Heizbedarf Δ", f"{h_late - h_early:+.0f}",
+                      help="Heizgradtage: negativ = mildere Winter")
+        st.markdown("")
+
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(
+            x=g["Jahr"], y=g["Effizienz"],
+            mode="lines+markers",
+            name="Effizienz (Verbrauch/Kopf je Heizbedarf)",
+            line=dict(color=ORANGE, width=2.5, shape="spline"),
+            marker=dict(size=7, color=ORANGE, line=dict(color=BG, width=1.5)),
+            hovertemplate="<b>%{x}</b><br>Effizienz: %{y:.2f}<extra></extra>",
+        ))
+        if len(g) > 2:
+            z = np.polyfit(g["Jahr"], g["Effizienz"], 1)
+            p = np.poly1d(z)
+            richtung = "sparsamer" if z[0] < 0 else "ineffizienter"
+            fig.add_trace(go.Scatter(
+                x=g["Jahr"], y=p(g["Jahr"]), mode="lines",
+                name=f"Trend ({z[0]:+.3f}/Jahr → {richtung})",
+                line=dict(color=AMBER, width=2, dash="dash"),
+            ))
+        fig.update_layout(
+            xaxis=dict(title="Jahr"),
+            yaxis=dict(title="kWh/Kopf je Heizbedarf", color=ORANGE, fixedrange=True),
+        )
+        style_fig(fig, title="Witterungsbereinigte Effizienz · tiefer = sparsamer",
+                  height=480)
+        st.plotly_chart(fig, use_container_width=True,
+                        config={"displayModeBar": False, "scrollZoom": False})
+
+        st.caption(
+            "Heizbedarf ≈ Heizgradtage aus den Temperaturdaten (Quelle: MeteoSchweiz / "
+            "teils geschätzt). Er misst die Heiz-*notwendigkeit* durch Kälte, nicht den "
+            "gemessenen Heiz-Stromverbrauch. Durch die Division wird der Wettereffekt "
+            "herausgerechnet — übrig bleiben Verhaltens- und Effizienzänderungen."
+        )
 
 
 # ── FOOTER ────────────────────────────────────────────────────────────────────
