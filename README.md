@@ -1,34 +1,76 @@
-# Sample Project
-This is a template for a data visualization project using Python, uv for environment and package management and Quarto for documentation.
+# Stromverbrauch Schweiz 1990–2025
 
-To adapt to your individual project change `sample` to the respective project name in the commands below
+Visualisierungsprojekt VDSS (FS26 — Gruppe 4)
 
-Adapt the `LICENSE` as required.
+Dieses Projekt untersucht die Entwicklung des Schweizer Stromverbrauchs zwischen
+1990 und 2025 und macht saisonale Muster und langfristige Trends sichtbar. Im
+Mittelpunkt steht die Frage, ob die Schweiz trotz Bevölkerungswachstum und
+wärmerer Winter wirklich effizienter geworden ist — beantwortet anhand
+öffentlich verfügbarer Daten von BFE, BFS und MeteoSchweiz.
 
-> To do: Provide a brief description of the project here.
+**Team:** Silvan, Salomon, Fabian
 
-## Project Organisation
-The visualization product development is organised according to the following process model:
+## Projektorganisation
 
-![The visualization product development process](docs/pics/vizproductprocess.png)
+Die Entwicklung folgt dem Prozessmodell für Visualisierungsprodukte aus dem
+Modul. Code und Konfigurationen liegen in den Phasenordnern, die Dokumentation
+als Quarto-Projekt in `docs/`.
 
-Code and configurations used in the different project phases are stored in the correspoding subfolders. Documentation artefacts in the form of a Quarto project are provided in `docs`.
+![Prozessmodell](docs/pics/vizproductprocess.png)
 
-| Phase | Code folders | Documentation section | `docs`-File |
-|:-------|:---|:---|:---|
-| Project Understanding | -  | Project Charta | project_charta.qmd  |
-| Data Acquisition and Exploration | `eda` | Data Report | data_report.qmd  |
-| Visual Encoding and Design | `encoding-design`  | Visual Encoding and Design | viz_encoding_design.qmd  |
-| Evaluation | `evaluation`  | Evaluation | evaluation.qmd  |
-| Deployment | `deployment` | Deployment | deplyoment.qmd |
+| Phase                            | Code-Ordner            | Dokumentation                |
+|----------------------------------|------------------------|------------------------------|
+| Projektverständnis               | —                      | `docs/project_charta.qmd`    |
+| Datenakquise & Aufbereitung      | `data_acquisition/`    | `docs/data_report.qmd`       |
+| Explorative Datenanalyse         | `eda/`                 | `docs/data_report.qmd`       |
+| Visual Design                    | `viz_design/`          | `docs/viz_design_report.qmd` |
+| Implementierung (Dashboard)      | `Dashboard/`           | `docs/viz_design_report.qmd` |
+| Evaluation                       | `evaluation/`          | `docs/viz_design_report.qmd` |
+| Deployment                       | `deployment/` + `.github/workflows/` | `docs/deployment.qmd` |
 
+Die Heizbedarf-Werte für die Jahre 1990–1993 stammen aus einer eigenen
+Regression (`data_acquisition/regression_heizbedarf.py`), da MeteoSchweiz für
+diesen Zeitraum keine direkten Werte publiziert.
 
-> To do: Adjust accoding to your specific project needs - ensure consistency with readme, documentation, etc.
+📖 **Live-Dokumentation:** <https://vdss-fs26-ds25a.github.io/Visualisation-Projekt-Gruppe-4/>
+*(automatisch deployed via GitHub Actions bei jedem Push auf `main`)*
 
-> To do: add link to documentation website for convenience.
+## Dashboard ausführen
 
+Das interaktive Dashboard liegt in `Dashboard/` und ist mit
+[Streamlit](https://streamlit.io/) gebaut.
 
-See section `Quarto Setup and Usage` for instructions on how to build and serve the documentation website using Quarto.
+### Schnellstart (Windows)
+
+Doppelklick auf `Dashboard/start_Dashboard_Industrie_Reaktor.bat`.
+
+Das Skript erstellt beim ersten Start ein virtuelles Environment (`venv/`),
+installiert die Requirements und startet Streamlit. Beim nächsten Mal überspringt
+es Setup und Installation und öffnet das Dashboard direkt im Browser unter
+<http://localhost:8501>.
+
+### Manuell
+
+```bash
+cd Dashboard
+python -m venv venv
+venv\Scripts\activate           # Windows
+# source venv/bin/activate      # macOS / Linux
+pip install -r requirements.txt
+streamlit run Dashboard_Industrie_Reaktor.py
+```
+
+### Module im Dashboard
+
+| Modul                    | Inhalt                                                                        |
+|--------------------------|-------------------------------------------------------------------------------|
+| Übersicht                | Stromverbrauch im Zeitverlauf mit 3/6/9/12-Monats-Trend und Bevölkerung       |
+| Verbrauch × Temperatur   | Doppelachsen-Vergleich Jahresmittel-Verbrauch und -Temperatur                 |
+| Korrelation              | Streudiagramm Temperatur vs. Verbrauch pro Kopf, Vergleich Wachstum/Sättigung |
+| Effizienz / Heizen       | Witterungsbereinigte Effizienz (Verbrauch ÷ Heizbedarf) über die Zeit         |
+
+Filterbar nach Zeitbereich und Jahreszeiten; oben rechts die Kernkraft-Kennzahl
+und in der Sidebar der Reaktor-Auslastungs-Indikator je nach selektierten Saisons.
 
 ## Python Environment Setup and Management with uv
 Make sure to have uv installed: https://docs.astral.sh/uv/getting-started/installation/
