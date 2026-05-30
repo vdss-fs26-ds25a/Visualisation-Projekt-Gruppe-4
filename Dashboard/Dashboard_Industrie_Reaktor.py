@@ -51,10 +51,23 @@ st.markdown("""
     section[data-testid="stSidebar"] {
         background: #15171b;
         border-right: 1px solid #2a2e35;
+        overflow-x: hidden !important;            /* kein horizontales Scrollen */
+    }
+    section[data-testid="stSidebar"] > div {
+        overflow-x: hidden !important;
     }
     section[data-testid="stSidebar"] * {
         color: #d4d8de !important;
         font-family: 'Inter', sans-serif;
+    }
+    /* Streamlits Sidebar-Klapppfeil ("keyboard_double_arrow_left") ausblenden,
+       der je nach Version als Text-Artefakt erscheint und horizontales Scrollen
+       provoziert. */
+    button[data-testid="stSidebarCollapseButton"],
+    button[data-testid="stBaseButton-headerNoPadding"],
+    [data-testid="stSidebarCollapsedControl"],
+    [data-testid="collapsedControl"] {
+        display: none !important;
     }
     h1 {
         font-family: 'Space Grotesk', sans-serif !important;
