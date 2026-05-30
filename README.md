@@ -116,75 +116,31 @@ uv remove <package>    # Paket entfernen
 
 `pyproject.toml` und `uv.lock` immer committen, damit das Team denselben Stand hat.
 
-## Runtime Configuration with Environment Variables
-The environment variables are specified in a .env-File, which is never commited into version control, as it may contain secrets. The repo just contains the file `.env.template` to demonstrate how environment variables are specified.
+## Dokumentation (Quarto)
 
-You have to create a local copy of `.env.template` in the project root folder and the easiest is to just rename it to `.env`.
+Die Projektdokumentation liegt als Quarto-Projekt in `docs/`. Die einzelnen
+`.qmd`-Dateien (Project Charta, Data Report, Viz-Design-Report, Deployment)
+ergeben gemeinsam die Doku-Webseite.
 
-The content of the .env-file is then read by the pypi-dependency: `python-dotenv`. Usage:
-```python
-import os
-from dotenv import load_dotenv
-```
+Online: <https://vdss-fs26-ds25a.github.io/Visualisation-Projekt-Gruppe-4/>
 
-`load_dotenv` reads the .env-file and sets the environment variables:
+### Lokal arbeiten
 
-```python
-load_dotenv()
-```
+Voraussetzung: [Quarto installieren](https://quarto.org/docs/get-started/)
+(einmalig), Python-Env vorhanden (`uv sync`).
 
-which can then be accessed (assuming the file contains a line `SAMPLE_VAR=<some value>`):
-
-```python
-os.environ['SAMPLE_VAR']
-```
-
-## Quarto Setup and Usage
-
-### Setup Quarto
-
-1. [Install Quarto](https://quarto.org/docs/get-started/)
-2. Optional: [quarto-extension for VS Code](https://marketplace.visualstudio.com/items?itemName=quarto.quarto)
-3. If working with svg files and pdf output you will need to install rsvg-convert:
-    * On macOS: `brew install librsvg`
-    * On Windows using chocolatey:
-      * [Install chocolatey](https://chocolatey.org/install#individual)
-      * [Install rsvg-convert](https://community.chocolatey.org/packages/rsvg-convert): `choco install rsvg-convert`
-
-Source `*.qmd` and configuration files are in the `docs` folder. The Quarto project configuration is in `docs/_quarto.yml`.
-
-With embedded python code chunks that perform computations, you need to make sure that the python environment is activated when rendering. This can be done by prefixing the render command with `uv run`, e.g.:
 ```bash
-uv run quarto render
+cd docs
+uv run quarto preview          # Live-Vorschau mit Auto-Reload
+uv run quarto render           # Statischen Build nach docs/build/ schreiben
 ```
 
-### Working on the Documentation
+Der `uv run`-Vorsatz stellt sicher, dass Python-Code-Chunks in den `.qmd`-Files
+das Projekt-Environment finden.
 
-1. Make changes to the `.qmd` source files in the `docs` folder
-2. Make sure the project Python environment is activated (see Python environment setup and management)
-3. Preview locally: `quarto preview` from the `docs` folder
-4. Build the documentation website: `uv run quarto render` from the `docs` folder. This renders to `docs/build`
-5. Check the website locally by opening `docs/build/index.html` in a browser
+### Deployment
 
-### Deployment of the Documentation to GitHub Pages
-
-The documentation website is deployed to GitHub Pages via a GitHub Actions workflow (`.github/workflows/publish.yml`). Every push to `main` triggers the workflow, which renders the Quarto project and deploys the result.
-
-The setting `execute: freeze: auto` in `_quarto.yml` ensures that Python computations are only executed locally. Results are cached in `docs/_freeze` and checked into the repository, so the GitHub Actions runner does not need Python — it uses the pre-computed results.
-
-#### Initial Setup (once)
-
-1. In the GitHub repository settings, go to **Settings > Pages** and set the source to **GitHub Actions**
-2. Render locally so that `_freeze` contains cached computation results:
-   ```bash
-   cd docs && uv run quarto render
-   ```
-3. Push the changes to `main`
-
-The `_freeze` directory and the workflow file `.github/workflows/publish.yml` should already be tracked in the repository.
-
-#### Publishing Updates
-
-1. Build the website locally: `uv run quarto render` from the `docs` folder. This updates `docs/build` (gitignored) and `docs/_freeze` (checked in)
-2. Check the website locally by opening `docs/build/index.html`
-3. Commit and push all updated files (including `docs/_freeze`) to `main`. The GitHub Actions workflow will render and deploy the site automatically
+Jeder Push auf `main` löst den GitHub-Actions-Workflow `.github/workflows/publish.yml`
+aus, der die Quarto-Doku rendert und auf GitHub Pages deployt. Die berechneten
+Python-Resultate werden aus `docs/_freeze/` geladen (per `execute: freeze: auto`
+in `_quarto.yml`), sodass der Workflow ohne lokales Python auskommt.
