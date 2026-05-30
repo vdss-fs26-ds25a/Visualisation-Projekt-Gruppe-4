@@ -1,5 +1,7 @@
 ---
 title: "Datenbericht"
+author: "Team 04 - Fabian Egli, Salomon König und Silvan Herzig"
+date: "2026-03-18"
 format: html
 ---
 
