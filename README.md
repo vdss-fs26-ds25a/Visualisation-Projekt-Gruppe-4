@@ -72,39 +72,49 @@ streamlit run Dashboard_Industrie_Reaktor.py
 Filterbar nach Zeitbereich und Jahreszeiten; oben rechts die Kernkraft-Kennzahl
 und in der Sidebar der Reaktor-Auslastungs-Indikator je nach selektierten Saisons.
 
-## Python Environment Setup and Management with uv
-Make sure to have uv installed: https://docs.astral.sh/uv/getting-started/installation/
+## Python-Environment für Analyse & Dokumentation
 
-After cloning the repository,  create the python environment with all dependencies based on the `.python-version`, `pyproject.toml` and `uv.lock` files by running
+Für die Analyse-Skripte (`eda/`, `data_acquisition/`) und das Rendern der
+Quarto-Doku wird ein eigenes Python-Environment mit
+[`uv`](https://docs.astral.sh/uv/) verwaltet (siehe `pyproject.toml` und
+`uv.lock`). Das Dashboard hat ein separates Environment — siehe Abschnitt
+*Dashboard ausführen*.
+
+### Setup (einmalig)
+
+[uv installieren](https://docs.astral.sh/uv/getting-started/installation/), dann
+im Projekt-Root:
+
 ```bash
 uv sync
 ```
 
-To add new dependencies, use
+Erstellt `.venv/` mit allen Abhängigkeiten aus `pyproject.toml` und der gepinnten
+Version in `uv.lock`.
+
+### Verwendung
+
+Jeden Python-Befehl mit `uv run` ausführen:
+
 ```bash
-uv add <package>
-```
-which will add the package to `pyproject.toml` and update the `uv.lock` file. You can also specify a version, e.g. `uv add pandas==2.0.3`.
-
-Remove packages with
-```bash
-uv remove <package>
-```
-
-Commit changes to `pyproject.toml` and `uv.lock` files into version control.
-
-Run `uv sync` after pulling changes to update the local environment.
-
-Whenever the python environment is used, make sure to prefix every command that uses python with `uv run`, e.g.
-```bash
-uv run python script.py
+uv run python eda/generate-data-profile.py
+uv run quarto render
 ```
 
-You can also run
-```bash 
+Oder das Environment direkt aktivieren (Linux/macOS):
+
+```bash
 source .venv/bin/activate
 ```
-to activate the project Python environment in a terminal session in order to avoid having to prefix every command.
+
+### Pakete verwalten
+
+```bash
+uv add <package>       # neues Paket hinzufügen
+uv remove <package>    # Paket entfernen
+```
+
+`pyproject.toml` und `uv.lock` immer committen, damit das Team denselben Stand hat.
 
 ## Runtime Configuration with Environment Variables
 The environment variables are specified in a .env-File, which is never commited into version control, as it may contain secrets. The repo just contains the file `.env.template` to demonstrate how environment variables are specified.

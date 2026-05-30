@@ -1,7 +1,7 @@
 [project]
-name = "sample-project"
+name = "visualisation-projekt-gruppe-4"
 version = "0.1.0"
-description = "Add your description here"
+description = "Stromverbrauch Schweiz 1990-2025 - VDSS FS26 Gruppe 4"
 readme = "README.md"
 requires-python = "==3.12.*"
 dependencies = [
