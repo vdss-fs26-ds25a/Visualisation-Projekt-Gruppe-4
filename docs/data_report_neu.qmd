@@ -1,0 +1,144 @@
+---
+title: "Datenbericht"
+format: html
+---
+
+# Datenbericht
+
+Alle Informationen zu den im Projekt verwendeten Daten werden im Datenbericht zusammengeführt, um die Nachvollziehbarkeit und Reproduzierbarkeit der Ergebnisse sicherzustellen und eine systematische Erweiterung der Datenbasis zu ermöglichen.
+
+Typischerweise werden in der explorativen Analyse der erfassten Rohdaten Qualitäts- und Strukturprobleme identifiziert, die Vorverarbeitungsschritte, das Zusammenführen einzelner Datensätze oder Feature Engineering erfordern. Daher enthält dieser Bericht separate Abschnitte für Rohdaten und verarbeitete Daten, die anschließend als Grundlage für die weiteren Visualisierungs- und Analysephasen dienen.
+
+---
+
+# Rohdaten
+
+## Übersicht Rohdatensätze
+
+: Übersicht der im Projekt verwendeten Rohdatensätze. {#tbl-raw-overview}
+
+| Name | Quelle | Speicherort |
+|------|--------|--------------|
+| **Data_Strom.xlsx** | Zusammengeführte Strom- und Wetterdaten Schweiz (Rohdaten) | Lokale Projektstruktur /data |
+| **ogd105_heizgradtage.csv** | Bundesamt für Energie (BFE) – Heizgradtage | Offene Energiedaten BFE |
+
+---
+
+## Details Datensatz 1: *Data_Strom.xlsx*
+
+- Enthält monatliche Stromverbrauchs- und Stromerzeugungsdaten der Schweiz (1990–2025)
+- Zusätzlich enthalten: Temperaturdaten, Bevölkerungszahlen, Heizbedarf, Deckungsgrad
+- Datenquelle: Kombination aus öffentlich zugänglichen Energiedaten und historischen Wetterdaten
+- Beschaffung: Datei wurde bereitgestellt und manuell in das Projekt integriert
+- Rechtliches: Daten basieren auf öffentlich zugänglichen Quellen (BFE, MeteoSchweiz)
+- Governance: Daten sind **öffentlich**, keine personenbezogenen Daten
+- Variablentypen:
+  - **Zielgrößen**: Stromverbrauch, Stromverbrauch pro Kopf
+  - **Einflussgrößen**: Temperatur, Heizgradtage, Bevölkerung, Saison
+
+### Datenkatalog
+
+: Datenkatalog für *Data_Strom.xlsx*. {#tbl-data-catalogue}
+
+| Index | Spaltenname | Datentyp | Werte / Regeln | Beschreibung |
+|-------|-------------|----------|----------------|--------------|
+| 1 | Jahr | Integer | 1990–2025 | Kalenderjahr |
+| 2 | Monat | String | jan–dec | Monatskürzel |
+| 3 | saison | String | Winter/Frühling/Sommer/Herbst | Jahreszeit |
+| 4 | Temperatur (C°) | Float | ca. –5 bis 20 | Durchschnittstemperatur |
+| 5 | Stromerzeugnisse | Integer | >0 | Gesamte Stromproduktion |
+| 6 | Stromverbrauch | Integer | >0 | Gesamter Stromverbrauch |
+| 7 | Bevölkerung | String/Integer | 6.7–9.0 Mio | Einwohnerzahl |
+| 8 | Stromverbrauch pro Kopf | Float | berechnet | Verbrauch pro Einwohner |
+| 9 | Heizbedarf | Float | ≥0 | Heizgradtage |
+| 10 | Deckungsgrad | Float | 0–2 | Verhältnis Produktion/Verbrauch |
+| 11 | Strombilanz | Integer | pos/neg | Nettoimport/Export |
+
+---
+
+## Datencharakteristik und Qualität
+
+Die explorative Datenanalyse (EDA) umfasst:
+
+### Numerische Variablen
+- Anteil fehlender Werte: gering, außer bei frühen Jahren (Temperatur/Heizbedarf)
+- Extremwerte:
+  - Stromverbrauch: 3300–5900 GWh
+  - Temperatur: –5 bis +17 °C
+- Verteilungen:
+  - Stromverbrauch zeigt saisonale Muster (Winter hoch, Sommer tief)
+  - Temperatur zeigt erwartete Jahresganglinie
+
+### Kategoriale Variablen
+- Monat: 12 Klassen, vollständig
+- Saison: 4 Klassen, vollständig
+
+### Korrelationen
+- Temperatur ↘ Stromverbrauch (negativer Zusammenhang)
+- Bevölkerung ↗ Stromverbrauch (langfristig positiv, ab 2009 stagnierend)
+
+### Datenqualität
+- Rohdaten enthalten Formatierungsprobleme (Bevölkerung mit Apostrophen)
+- Teilweise fehlende Werte bei Heizbedarf (vor 1994)
+- Keine Ausreißer, die unplausibel wirken
+
+---
+
+# Verarbeitete Daten
+
+## Übersicht Verarbeitete Datensätze
+
+: Übersicht der verarbeiteten Datensätze. {#tbl-processed-overview}
+
+| Name | Quelle | Speicherort |
+|------|--------|--------------|
+| **Data_Strom_korrigiert.xlsx** | Bereinigte und angereicherte Version von Data_Strom.xlsx | /data/processed |
+| **ogd35_schweizerische_elektrizitaetsbilanz_monatswerte.csv** | BFE – Elektrizitätsbilanz | /data/external |
+
+---
+
+## Details Verarbeiteter Datensatz 1: *Data_Strom_korrigiert.xlsx*
+
+### Beschreibung
+Dieser Datensatz ist die bereinigte und erweiterte Version der Rohdaten. Er enthält:
+
+- Korrigierte Bevölkerungszahlen (numerisch)
+- Berechnete Felder:
+  - Stromverbrauch pro Kopf
+  - Heizbedarf (aus BFE-Daten ergänzt)
+  - Deckungsgrad
+- Harmonisierung der Monatsnamen
+- Hinzufügen einer Datumsspalte
+- Entfernen fehlerhafter Zeilen (z. B. Jahr 2026)
+
+### Gründe für die Verarbeitung
+- Sicherstellung numerischer Konsistenz
+- Zusammenführung externer Datenquellen (Heizgradtage, Elektrizitätsbilanz)
+- Vorbereitung für Visualisierungen (Zeitachsen, Filter, Trends)
+
+### Datenzugriff
+- Datei liegt im Projekt unter `/data/processed`
+- Wird im Dashboard per `pandas.read_excel()` geladen
+
+### Datenkatalog (Auszug)
+
+| Spalte | Beschreibung |
+|--------|--------------|
+| Datum | Monatliches Datum (YYYY-MM-01) |
+| Bevoelkerung_num | numerisch bereinigte Bevölkerungszahl |
+| Stromverbrauch_pro_Kopf | Verbrauch in kWh pro Einwohner |
+| Erzeugung_Kernkraftwerk_GWh | aus Elektrizitätsbilanz ergänzt |
+| Heizbedarf_quelle | Herkunft der Heizgradtage |
+
+---
+
+## Datencharakteristik und Qualität
+
+- Keine fehlenden Werte mehr in kritischen Spalten
+- Einheitliche Datentypen
+- Verbesserte Interpretierbarkeit durch Feature Engineering
+- Geeignet für Zeitreihenanalysen und interaktive Dashboards
+
+---
+
+# Ende des Datenberichts
