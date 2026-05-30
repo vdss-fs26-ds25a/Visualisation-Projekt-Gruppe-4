@@ -1,147 +1,146 @@
-# Data Report
-All information on the data used in the project is compiled in the data report in order to ensure the traceability and reproducibility of the results and to enable a systematic expansion of the database.
+---
+title: "Datenbericht"
+author: "Team 04 - Fabian Egli, Salomon König und Silvan Herzig"
+date: "2026-05-31"
+format: html
+---
 
-Typically, in the exploratory analysis of the acquired raw data, quality and other issues are identified, which require pre-processing, merging of individual datasets and feature engineering into processed datasets. Therefore, this template provides a separate section for the processed data, which then serves as a starting point for the modelling activities. This needs to be adapted to the specific project requirements.
+# Datenbericht
 
-## Raw data
-### Overview Raw Datasets
+Alle Informationen zu den im Projekt verwendeten Daten werden im Datenbericht zusammengeführt, um die Nachvollziehbarkeit und Reproduzierbarkeit der Ergebnisse sicherzustellen und eine systematische Erweiterung der Datenbasis zu ermöglichen.
 
-: Overview of raw datasets used in the project. {#tbl-raw-overview}
+Typischerweise werden in der explorativen Analyse der erfassten Rohdaten Qualitäts- und Strukturprobleme identifiziert, die Vorverarbeitungsschritte, das Zusammenführen einzelner Datensätze oder Feature Engineering erfordern. Daher enthält dieser Bericht separate Abschnitte für Rohdaten und verarbeitete Daten, die anschließend als Grundlage für die weiteren Visualisierungs- und Analysephasen dienen.
 
-| Name | Quelle | Storage location |
-|----------------|-----------------------------------------|--------------------------------------------------------------------------|
-| Dataset 1      | Name/short description of the data source | Link and/or short description of the location where the data is stored, e.g. accessible to the team |
-| Dataset 2      | …                                       | …                                                                        |
+---
 
-### Details Dataset 1
+# Rohdaten
 
-- Description of what information the dataset contains
-- Details of the data source/provider
-- Information on data procurement: description and possibly references to resources (download scripts, tools, online services, ...). Any new team member should be able to acquire the data indepentendently following these instructions.
-- Legal aspects of data use, licences, etc.
-- Data governance aspects: Categorisation of the data based on internal business requirements, e.g. public, business-relevant, personal
-- If applicable: categorisation into dependent (target variable, regressor) and independent (regressor) variables
-- ...
+## Übersicht Rohdatensätze
 
-#### Data Catalogue
-The data catalogue basically represents an extended schema of a relational database.
+: Übersicht der im Projekt verwendeten Rohdatensätze. {#tbl-raw-overview}
 
+| Name | Quelle | Speicherort |
+|------|--------|--------------|
+| **Data_Strom.xlsx** | Zusammengeführte Strom- und Wetterdaten Schweiz (Rohdaten) | Lokale Projektstruktur /data |
+| **ogd105_heizgradtage.csv** | Bundesamt für Energie (BFE) – Heizgradtage | Offene Energiedaten BFE |
 
-: Data catalogue for Dataset 1. {#tbl-data-catalogue}
+---
 
-| Column index | Column name |  Datatype | Values (Range, validation rules) | Short description |
-|---|---|---|---|---|
-| 1 |   |   |   |   |
-| 2 |   |   |   |   |
-|   |   |   |   |   |
+## Details Datensatz 1: *Data_Strom.xlsx*
 
+- Enthält monatliche Stromverbrauchs- und Stromerzeugungsdaten der Schweiz (1990–2025)
+- Zusätzlich enthalten: Temperaturdaten, Bevölkerungszahlen, Heizbedarf, Deckungsgrad
+- Datenquelle: Kombination aus öffentlich zugänglichen Energiedaten und historischen Wetterdaten
+- Beschaffung: Datei wurde bereitgestellt und manuell in das Projekt integriert
+- Rechtliches: Daten basieren auf öffentlich zugänglichen Quellen (BFE, MeteoSchweiz)
+- Governance: Daten sind **öffentlich**, keine personenbezogenen Daten
+- Variablentypen:
+  - **Zielgrößen**: Stromverbrauch, Stromverbrauch pro Kopf
+  - **Einflussgrößen**: Temperatur, Heizgradtage, Bevölkerung, Saison
 
-#### If applicable: Entity Relationship Diagram
+### Datenkatalog
 
+: Datenkatalog für *Data_Strom.xlsx*. {#tbl-data-catalogue}
 
-#### Data Chracteristics and Quality
+| Index | Spaltenname | Datentyp | Werte / Regeln | Beschreibung |
+|-------|-------------|----------|----------------|--------------|
+| 1 | Jahr | Integer | 1990–2025 | Kalenderjahr |
+| 2 | Monat | String | jan–dec | Monatskürzel |
+| 3 | saison | String | Winter/Frühling/Sommer/Herbst | Jahreszeit |
+| 4 | Temperatur (C°) | Float | ca. –5 bis 20 | Durchschnittstemperatur |
+| 5 | Stromerzeugnisse | Integer | >0 | Gesamte Stromproduktion |
+| 6 | Stromverbrauch | Integer | >0 | Gesamter Stromverbrauch |
+| 7 | Bevölkerung | String/Integer | 6.7–9.0 Mio | Einwohnerzahl |
+| 8 | Stromverbrauch pro Kopf | Float | berechnet | Verbrauch pro Einwohner |
+| 9 | Heizbedarf | Float | ≥0 | Heizgradtage |
+| 10 | Deckungsgrad | Float | 0–2 | Verhältnis Produktion/Verbrauch |
+| 11 | Strombilanz | Integer | pos/neg | Nettoimport/Export |
 
-The methods of exploratory data analysis are used to describe relevant characteristics of the data and identify data quality issues. This includes, for example, 
+---
 
-the univariate andalysis of numerical variables:
+## Datencharakteristik und Qualität
 
-* Number or fraction
-    * of unique values
-    * of missing values
-    * of zero values
-    * of negative values
-* Frequency distribution
-* Extreme values (minimum and maximum)
-* Histogram
-* Measures of central tendency:
-    * arithmetic mean
-    * median
-    * mode
-* Measures of dispersion and visualisation of dispersion:
-    * Range
-    * Quantiles and interquartile range (IQR)
-    * Box plot
-    * Variance and standard deviation 
+Die explorative Datenanalyse (EDA) umfasst:
 
-and for categorical variables:
+### Numerische Variablen
+- Anteil fehlender Werte: gering, außer bei frühen Jahren (Temperatur/Heizbedarf)
+- Extremwerte:
+  - Stromverbrauch: 3300–5900 GWh
+  - Temperatur: –5 bis +17 °C
+- Verteilungen:
+  - Stromverbrauch zeigt saisonale Muster (Winter hoch, Sommer tief)
+  - Temperatur zeigt erwartete Jahresganglinie
 
-* number of classes
-* and the corresponding distribution of values
-* fraction of missing values
+### Kategoriale Variablen
+- Monat: 12 Klassen, vollständig
+- Saison: 4 Klassen, vollständig
 
-The correlation between variables in the form of
+### Korrelationen
+- Temperatur ↘ Stromverbrauch (negativer Zusammenhang)
+- Bevölkerung ↗ Stromverbrauch (langfristig positiv, ab 2009 stagnierend)
 
-* correlation coefficients (e.g. Pearson, Spearman, Kendall)
-* and corresponding visualizations, e.g. scatter plot, heatmap, grouped box plot (for categorical-numerical relationships), ...
+### Datenqualität
+- Rohdaten enthalten Formatierungsprobleme (Bevölkerung mit Apostrophen)
+- Teilweise fehlende Werte bei Heizbedarf (vor 1994)
+- Keine Ausreißer, die unplausibel wirken
 
+---
 
-The results the exploratory data analysis should be summarised here (code and full output in the `eda` subfolder) and the implications for the subsequent data pre-processing, visualization design and implementation steps should be discussed. Is the data quality and quantity sufficient to achieve the visualisation goals? Is it necessary to acquire additional or different data? Are there any limitations that need to be considered in the design and implementation of the visualisation product? Are there any specific data characteristics that can be used to enhance the visualisation design? For example, if there are a lot of missing values in a dataset, this might need to be taken into account in the design of the visualisation product, e.g. by using specific visual encodings to indicate missing values or by providing options for filtering or imputing missing values. 
+# Verarbeitete Daten
 
-Tip: `Ydata-profiling` is a Python library that can be used to perform exploratory data analysis and generate a comprehensive report on the characteristics of the data, including the distribution of values, missing values, correlations between variables, and more. This can be a useful tool to generate the full analysis in the code section and then only include the relevant information here in the data report.
+## Übersicht Verarbeitete Datensätze
 
-This is an example on how to incorporate executable Python code and show a figure output:
+: Übersicht der verarbeiteten Datensätze. {#tbl-processed-overview}
 
-```{python}
-#| label: fig-demo
-#| fig-cap: "Distribution of monthly revenue across product categories (sample data)."
-#| echo: true
-#| code-fold: true
-import matplotlib.pyplot as plt
+| Name | Quelle | Speicherort |
+|------|--------|--------------|
+| **Data_Strom_korrigiert.xlsx** | Bereinigte und angereicherte Version von Data_Strom.xlsx | /data/processed |
+| **ogd35_schweizerische_elektrizitaetsbilanz_monatswerte.csv** | BFE – Elektrizitätsbilanz | /data/external |
 
-# Sample data
-categories = ['Electronics', 'Clothing', 'Food', 'Books', 'Sports']
-revenue = [42000, 28500, 35200, 12800, 19400]
+---
 
-# Create the bar chart
-fig, ax = plt.subplots(figsize=(6, 3.75))
+## Details Verarbeiteter Datensatz 1: *Data_Strom_korrigiert.xlsx*
 
-bars = ax.bar(categories, revenue, color='#4C78A8', edgecolor='white')
+### Beschreibung
+Dieser Datensatz ist die bereinigte und erweiterte Version der Rohdaten. Er enthält:
 
-ax.set_xlabel('Product Category')
-ax.set_title('Monthly Revenue by Product Category')
+- Korrigierte Bevölkerungszahlen (numerisch)
+- Berechnete Felder:
+  - Stromverbrauch pro Kopf
+  - Heizbedarf (aus BFE-Daten ergänzt)
+  - Deckungsgrad
+- Harmonisierung der Monatsnamen
+- Hinzufügen einer Datumsspalte
+- Entfernen fehlerhafter Zeilen (z. B. Jahr 2026)
 
-ax.spines['top'].set_visible(False)
-ax.spines['right'].set_visible(False)
-ax.spines['left'].set_visible(False)
-ax.yaxis.set_visible(False)
-ax.tick_params(axis='x', length=0)
+### Gründe für die Verarbeitung
+- Sicherstellung numerischer Konsistenz
+- Zusammenführung externer Datenquellen (Heizgradtage, Elektrizitätsbilanz)
+- Vorbereitung für Visualisierungen (Zeitachsen, Filter, Trends)
 
-# Add value labels on bars
-for bar, val in zip(bars, revenue):
-    ax.text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 500,
-            f'{val:,.0f}', ha='center', va='bottom', fontsize=9)
+### Datenzugriff
+- Datei liegt im Projekt unter `/data/processed`
+- Wird im Dashboard per `pandas.read_excel()` geladen
 
-plt.tight_layout()
-plt.show()
-```
+### Datenkatalog (Auszug)
 
-Then the figure can be referenced with @fig-demo.
+| Spalte | Beschreibung |
+|--------|--------------|
+| Datum | Monatliches Datum (YYYY-MM-01) |
+| Bevoelkerung_num | numerisch bereinigte Bevölkerungszahl |
+| Stromverbrauch_pro_Kopf | Verbrauch in kWh pro Einwohner |
+| Erzeugung_Kernkraftwerk_GWh | aus Elektrizitätsbilanz ergänzt |
+| Heizbedarf_quelle | Herkunft der Heizgradtage |
 
-## Processed Data
-### Overview Processed Datasets
+---
 
-: Overview of processed datasets used in the project. {#tbl-processed-overview}
+## Datencharakteristik und Qualität
 
-| Name | Quelle | Storage location |
-|----------------|-----------------------------------------|--------------------------------------------------------------------------|
-| Processed Dataset 1      | Name/short description of the data source | Link and/or short description of the location where the data is stored, e.g. accessible to the team |
-| Processed Dataset 2      | …                                       | …                                                                        |
+- Keine fehlenden Werte mehr in kritischen Spalten
+- Einheitliche Datentypen
+- Verbesserte Interpretierbarkeit durch Feature Engineering
+- Geeignet für Zeitreihenanalysen und interaktive Dashboards
 
-### Details Processed Dataset 1
+---
 
-- Description of what information the dataset contains
-- Details and reasons for the processing steps -> Traceability and ensuring reproducibility
-- How can the data be accessed? Description, scripts, tools, ...
-- ...
-
-#### Data Catalogue
-
-
-#### If applicable: Entity Relationship Diagram
-
-
-#### Data Chracteristics and Quality
-
-
-### Details Processed Dataset 2
-...
+# Ende des Datenberichts

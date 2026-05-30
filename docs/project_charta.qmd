@@ -1,5 +1,244 @@
 ---
-title: "Project Charta"
+title: "Project Charta – Stromdashboard Schweiz"
+author: "Team 04 - Fabian Egli, Salomon König und Silvan Herzig"
+date: "2026-05-31"
+format: html
+---
+
+# Project Charta
+
+## Kontext und Scope
+
+Dieses Visualisierungsprojekt untersucht die Entwicklung des Stromverbrauchs in der Schweiz von 1990 bis 2025. Im Zentrum stehen saisonale Muster, langfristige Trends sowie der Zusammenhang zwischen Temperatur, Bevölkerung und Verbrauch. Die Daten stammen aus öffentlich zugänglichen Schweizer Energie- und Wetterquellen und wurden in einem konsolidierten Datensatz zusammengeführt.
+
+Das Visualisierungsprodukt wird als interaktives Streamlit‑Dashboard umgesetzt.  
+Die visuelle Leitidee orientiert sich an einem **Kernkraftwerk‑Reaktor**:
+
+* **Reaktor‑Module** = Analyse‑Seiten  
+* **Orange‑Schwarz‑Palette** = Energie, Hitze, Warnsignal  
+* **Reaktor‑Status** = Kernkraftanteil im Datensatz  
+* **Saisonfilter** = „Betriebsmodi“ des Reaktors  
+* **Trendlinien** = Energiefluss im Reaktor  
+
+Die betrachteten Variablen umfassen:
+
+* Jahr  
+* Monat  
+* Temperatur  
+* Stromerzeugung  
+* Stromverbrauch  
+* Bevölkerung  
+* Saison (Winter, Frühling, Sommer, Herbst)
+
+Zentrale Fragestellungen:
+
+* Wie verändert sich der Stromverbrauch im Jahresverlauf?  
+* Welche saisonalen Unterschiede sind stabil oder verändern sich?  
+* Wie entwickelt sich der Verbrauch im Verhältnis zur Bevölkerung?  
+* Welche Rolle spielen Temperatur und Jahreszeiten?
+
+Der Nutzen liegt in einer intuitiven, interaktiven und visuell starken Darstellung der Schweizer Stromentwicklung.
+
+---
+
+## Project Objectives and Success Criteria
+
+### Objectives (Stakeholder Perspective)
+
+* Darstellung des Stromverbrauchs über die Jahre hinweg  
+* Sichtbarmachung saisonaler Unterschiede und langfristiger Entwicklungen  
+* Bereitstellung eines interaktiven Dashboards zur explorativen Analyse  
+* Integration eines **Reaktor‑Designs** zur narrativen Verstärkung  
+
+### Success Criteria
+
+**Qualitativ**
+
+* Verständliche, klare Visualisierungen  
+* Konsistentes Reaktor‑Design (Farben, Struktur, Metaphern)  
+* Nutzer erkennen Trends, Muster und Zusammenhänge  
+
+**Quantitativ**
+
+* Mindestens 4 aussagekräftige Visualisierungen  
+* Mindestens 2 Interaktionsmöglichkeiten (Filter, Hover, Vergleich)  
+* Reproduzierbare Datenaufbereitung und Dokumentation  
+
+### Out of Scope
+
+* Keine mobile App  
+* Keine Echtzeitdaten  
+* Keine Vorhersagemodelle oder Machine Learning  
+
+---
+
+## Stakeholder Analysis
+
+* **Dozierende** – Bewertung von Methodik, Datenaufbereitung und Visualisierung  
+* **Studierende** – Exploration von Energie- und Wetterdaten  
+* **Öffentlichkeit** – verständliche Darstellung komplexer Stromdaten  
+
+---
+
+## User Analysis
+
+### Persona 1: Student der Wirtschaft oder Umweltwissenschaften
+
+**User Tasks**
+
+* Vergleich saisonaler Unterschiede  
+* Nutzung der Diagramme für Präsentationen  
+* Analyse von Temperatur–Verbrauch‑Zusammenhängen  
+
+**Pains**
+
+* Rohdaten schwer überschaubar  
+* Trends nicht sofort sichtbar  
+* Einflussfaktoren schwer vergleichbar  
+
+**Gains**
+
+* Schnelle Übersicht  
+* Interaktive, verständliche Visualisierungen  
+* Unterstützung für Studienarbeiten  
+
+**User Stories**
+
+* „Ich möchte saisonale Muster erkennen, um sie in meiner Präsentation zu verwenden.“  
+* „Ich möchte Temperatur und Verbrauch vergleichen, ohne selbst Daten aufzubereiten.“  
+
+---
+
+### Persona 2: Energie‑ oder Politikinteressierte Person
+
+**User Tasks**
+
+* Beobachtung langfristiger Entwicklungen  
+* Analyse von Temperatur‑Einflüssen  
+* Vergleich von Winter‑ und Sommerperioden  
+
+**Pains**
+
+* Energiedaten oft komplex und unübersichtlich  
+* Fehlende Interaktivität in klassischen Statistiken  
+* Saisonale Muster in Tabellen kaum erkennbar  
+
+**Gains**
+
+* Verständliche Darstellung komplexer Daten  
+* Interaktive Exploration verschiedener Zeiträume  
+* Bessere Einordnung von Entwicklungen  
+
+**User Stories**
+
+* „Ich möchte sehen, ob die Winter wirklich wärmer werden.“  
+* „Ich möchte verstehen, wie sich die Bevölkerung auf den Verbrauch auswirkt.“  
+
+---
+
+## Situation Assessment
+
+### Ressourcen
+
+* Konsolidierter Datensatz (Stromverbrauch, Erzeugung, Temperatur, Bevölkerung)  
+* Team von drei Personen  
+* Tools: Python, Pandas, Plotly, Streamlit, GitHub, Quarto  
+
+### Einschränkungen
+
+* Begrenzte Projektzeit  
+* Fokus auf Reproduzierbarkeit  
+* Keine externen Datenquellen ohne Begründung  
+
+### Risiken
+
+* Fehlende oder inkonsistente Werte  
+* Überladung des Dashboards  
+* Zeitdruck bei Implementierung  
+
+---
+
+## Visualization Concept
+
+### Produktform
+
+Interaktives Dashboard im **Reaktor‑Design**:
+
+* **Reaktor 1 – Langfristanalyse**  
+* **Reaktor 2 – Verbrauch × Temperatur**  
+* **Reaktor 3 – Korrelation**  
+* **Reaktor 4 – Effizienz / Heizen**  
+
+### Visual Encodings
+
+* Liniencharts für Trends  
+* Scatterplots für Zusammenhänge  
+* Balkendiagramme für saisonale Vergleiche  
+* Reaktor‑Statusanzeige (KKW‑Anteil)  
+
+### Interactivity
+
+* Jahresfilter  
+* Saisonfilter (Winter, Frühling, Sommer, Herbst)  
+* Hover‑Informationen  
+* Vergleichsansichten  
+
+### Narrative and Annotation
+
+* Reaktor‑Metapher zur Strukturierung  
+* Hinweise zu Trends direkt in den Visualisierungen  
+* Hervorhebung von Winterpeaks und Sommerdellen  
+
+### Target Medium
+
+* Streamlit‑Webanwendung  
+* Bereitstellung über GitHub  
+
+### Value Contribution
+
+**Cognitive Value**
+
+* Erkennen saisonaler Muster  
+* Verständnis langfristiger Entwicklungen  
+
+**Communicative Value**
+
+* Unterstützung von Präsentationen  
+* Verständliche Kommunikation komplexer Daten  
+
+**Experiential Value**
+
+* Interaktive Exploration  
+* Reaktor‑Design erzeugt Wiedererkennungswert  
+
+---
+
+## Project Plan
+
+```{mermaid}
+gantt
+    title Project Plan
+    dateFormat YYYY-MM-DD
+    tickInterval 5day
+
+    section Projektverständnis
+        Kontextanalyse :a1, 2026-03-20, 2d
+        Stakeholder und User Analyse :a2, 2026-03-22, 3d
+        Projektcharta finalisieren :a3, 2026-03-25, 2d
+
+    section Datenphase
+        Datenaufbereitung :a4, 2026-03-27, 3d
+        Explorative Analyse :a5, 2026-03-30, 3d
+
+    section Visualisierung
+        Konzept und Design :a6, 2026-04-02, 3d
+        Implementierung :a7, 2026-04-05, 5d
+
+    section Abschluss
+        Dokumentation :a8, 2026-04-10, 2d
+        Präsentation vorbereiten :a9, 2026-04-12, 2d
+---
+title: "Project Charta neu"
 author: "Team 04"
 date: "2026-03-18"
 format: html
@@ -9,201 +248,191 @@ format: html
 
 ## Context and Scope
 
-Das vorliegende Visualisierungsprojekt ist im Bereich Energieverbrauch und dessen Verteilung angesiedelt. Grundlage bildet ein historischer Datensatz zum Endenergieverbrauch verschiedener Energieträger über den Zeitraum von 1910 bis 2024 in der Schweiz. Alle Werte sind in Terajoule (TJ) angegeben und liegen in jährlicher Aggregation vor.
+Das vorliegende Visualisierungsprojekt untersucht die Entwicklung des Stromverbrauchs in der Schweiz im Zeitraum von 1990 bis 2025. Im Fokus stehen saisonale Unterschiede sowie langfristige Veränderungen des Verbrauchsverhaltens. Grundlage bildet ein zusammengeführter Datensatz aus öffentlich verfügbaren Schweizer Energie- und Wetterdaten.
+
+Das Visualisierungsprodukt wird als interaktives Dashboard mit Streamlit umgesetzt und online bereitgestellt.
 
 Die betrachteten Energieträger umfassen:
 
-* Erdölbrennstoffe
-* Treibstoffe
-* Elektrizität
-* Gas
-* Kohle
-* Holzenergie
-* Fernwärme
-* Abfälle
-* Übrige erneuerbare Energien
+* Jahr
+* Monat
+* Temperatur
+* Stromerzeugnung
+* Stromverbrauch
+* Bevölkerungsentwicklung
 
-Der Datensatz ermöglicht eine tiefere Analyse struktureller Veränderungen im Energiesystem, insbesondere den Übergang von fossilen zu erneuerbaren Energieträgern sowie die Entwicklung einzelner Energieformen über mehr als ein Jahrhundert.
 
-Ziel des Projekts ist es, diese Entwicklungen visuell aufzubereiten und verständlich darzustellen. Dabei stehen folgende Fragestellungen im Zentrum:
+* Wie verändert sich der Stromverbrauch im Verlauf eines Jahres?
+* Welche saisonalen Unterschiede lassen sich zwischen den Monaten erkennen?
+* Wie entwickelt sich der Stromverbrauch im Verhältnis zur Bevölkerungsentwicklung?
 
-* Wie hat sich der Gesamtenergieverbrauch zwischen 1910 und 2024 entwickelt
-* Wie hat sich die relative Bedeutung einzelner Energieträger im Zeitverlauf verändert
-* Wann lassen sich strukturelle Brüche oder Übergänge im Energiesystem erkennen
-* Wie unterscheiden sich fossile und erneuerbare Energieträger in ihrer Entwicklung
+Der erwartete Nutzen liegt in einer transparenten und intuitiven Darstellung langfristiger Entwicklungen und saisonaler Muster des Schweizer Stromverbrauchs.
 
-Der erwartete Nutzen liegt in der transparenten und intuitiven Darstellung langfristiger Energietrends sowie in der Unterstützung datenbasierter Argumentationen im Kontext Energiepolitik, Nachhaltigkeit und Transformation.
 
-Das Visualisierungsprodukt wird als interaktive Webanwendung (z B Dashboard oder Data Story) auf einer GitHub Page bereitgestellt.
+Ziel des Projekts ist es, diese Entwicklungen visuell aufzubereiten und für Nutzerinnen und Nutzer verständlich darzustellen.
+
 
 ## Project Objectives and Success Criteria
 
 ### Objectives (Stakeholder Perspective)
 
-* Ermöglichung eines klaren Überblicks über die zeitliche Entwicklung des Endenergieverbrauchs von 1910 bis 2024
-* Unterstützung des Vergleichs zwischen verschiedenen Energieträgern (insbesondere fossile vs erneuerbare)
-* Sichtbarmachung struktureller Veränderungen und Trends im Energiesystem
-* Bereitstellung einer intuitiven Möglichkeit zur Exploration einzelner Energieträger und Zeiträume
+* Darstellung des Stromverbrauchs in der Schweiz über die Jahre hinweg.
+* Sichtbarmachung saisonaler Unterschiede und langfristiger Entwicklungen.
+* Bereitstellung eines interaktiven Dashboards zur explorativen Analyse der Daten.
+
 
 ### Success Criteria
 
 **Qualitativ:**
 
-* Nutzer können zentrale Trends (z B Wachstum, Rückgang, Strukturwandel) korrekt identifizieren
-* Unterschiede zwischen Energieträgern werden klar verständlich dargestellt
-* Die Visualisierung unterstützt sowohl explorative als auch erklärende Nutzung
+* Das Dashboard ermöglicht eine verständliche Analyse der Stromdaten.
+* Die Visualisierungen sind übersichtlich und nachvollziehbar aufgebaut
+* Nutzer können saisonale Muster und langfristige Trends erkennen.
+
 
 **Quantitativ:**
 
-* Mindestens 4 klare Erkenntnisse werden visuell hervorgehoben (z B Übergang von Kohle zu Elektrizität)
-* Mindestens 2 Interaktionsmöglichkeiten (z B Filter oder Auswahl einzelner Energieträger)
-* Alle Visualisierungen sind reproduzierbar und konsistent dokumentiert
+* Mindestens 4 aussagekräftige Visualisierungen werden umgesetzt.
+* Die Datenaufbereitung und Visualisierungen sind reproduzierbar dokumentiert.
+* Das Dashboard enthält mindestens eine zeitliche Trendanalyse und einen saisonalen Vergleich.
 
 ### Out of Scope
 
-* Vorhersagen zukünftiger Energieverbräuche
-* Integration zusätzlicher externer Datensätze
-* Detailanalysen auf regionaler oder sektoraler Ebene
+* keine mobile App
+* keine Echtzeitdaten
+* Keine Vorhersagemodelle oder Maschine learning
 
 ## Stakeholder Analysis
 
-Relevante Stakeholder umfassen:
-
-* Dozierende: Bewertung der methodischen Qualität, Nachvollziehbarkeit und Visualisierung
-* Projektteam: Analyse, Umsetzung und Dokumentation
-* Interessierte Öffentlichkeit: Nutzung der Visualisierung zur Informationsgewinnung über Energieentwicklung
-
-Die Dozierenden fungieren als Auftraggeber und Evaluatoren. Die Öffentlichkeit stellt die primäre Zielgruppe dar, deren Informationsbedürfnisse durch das Produkt adressiert werden.
+* Dozierende: Bewertung der methodischen Qualität, Datenaufbereitung und Visualisierung.
+* Studierende: Nutzung des Dashboards zur Exploration von Strom- und Wetterdaten.
+* Interessierte Öffentlichkeit: Einfache und verständliche Darstellung des Stromverbrauchs in     der Schweiz.
 
 ## User Analysis
 
 ### Persona 1: Student der Wirtschaft oder Umweltwissenschaften
 
-* Domain Expertise: mittel
-* Data Literacy: mittel
-* Technische Umgebung: Laptop, Webbrowser
-* Nutzung: punktuell (z B für Projekte oder Präsentationen)
+* Studiert an einer Fachhochschule oder Universität
+* Besitzt grundlegende Kenntnisse im Umgang mit Daten und Diagrammen
+* Interessiert sich für Energieverbrauch, Nachhaltigkeit und gesellschaftliche Entwicklungen
 
 **User Tasks**
 
-* Analyse historischer Energieentwicklungen
-* Vorbereitung von Präsentationen oder Berichten
-* Vergleich von Energieträgern
+* Vergleich saisonaler Unterschiede im Stromverbrauch
+* Nutzung von Diagrammen für Präsentationen oder Studienarbeiten
+* Exploration des Zusammenhangs zwischen Temperatur und Stromverbrauch
 
 **Pains**
 
-* Rohdaten sind schwer interpretierbar
-* Fehlende Übersicht über langfristige Trends
-* Schwierigkeiten beim Vergleich vieler Kategorien gleichzeitig
+* Grosse Datenmengen sind schwer überschaubar
+* Trends sind in Rohdaten schwierig erkennbar
+* Unterschiedliche Einflussfaktoren sind oft nicht direkt vergleichbar
 
 **Gains**
 
-* Klare Zeitreihenvisualisierungen
-* Möglichkeit einzelne Energieträger ein und auszublenden
-* Schnelles Erkennen von Wendepunkten und Trends
+* Schnelle Übersicht über wichtige Entwicklungen
+* Einfach verständliche und interaktive Visualisierungen
+* Unterstützung bei Präsentationen und Analysen
 
 **User Stories**
 
-* Als Student möchte ich den Energieverbrauch einzelner Energieträger über die Zeit sehen, um Trends zu verstehen
-* Als Student möchte ich Energieträger vergleichen können, um Unterschiede zu analysieren
-* Als Student möchte ich zentrale Entwicklungen schnell erkennen, um sie in Präsentationen zu verwenden
+* 
+* 
 
 ### Persona 2: Fachinteressierte Person im Bereich Energie oder Politik
 
-* Domain Expertise: hoch
-* Data Literacy: mittel bis hoch
-* Technische Umgebung: Desktop oder Tablet
-* Nutzung: regelmässig
+* Verfolgt Entwicklungen im Energiesektor und gesellschaftliche Trends
+* Besitzt Interesse an Stromverbrauch und Energieversorgung in der Schweiz
+* Nutzt Visualisierungen zur Informationsgewinnung und Einordnung von Entwicklungen
 
 **User Tasks**
 
-* Analyse von Strukturwandel im Energiesystem
-* Kommunikation von Erkenntnissen an Dritte
-* Unterstützung von Argumentationen
+* Beobachtung langfristiger Entwicklungen des Stromverbrauchs
+* Analyse von Zusammenhängen zwischen Temperatur und Stromverbrauch
+* Vergleich von Winter- und Sommerperioden
 
 **Pains**
 
-* Fehlende visuelle Aufbereitung historischer Daten
-* Schwierige Vergleichbarkeit von Energieträgern
-* Zeitaufwendige manuelle Analyse
+* Komplexe Energiedaten sind oft schwer verständlich aufbereitet
+* Fehlende interaktive Möglichkeiten in klassischen Statistiken  
+* Saisonale Muster sind in Tabellen schwer erkennbar
 
 **Gains**
 
-* Interaktive Exploration von Zeiträumen
-* Klare Unterscheidung zwischen fossilen und erneuerbaren Energien
-* Visualisierung langfristiger Entwicklungen auf einen Blick
+* Verständliche Darstellung komplexer Daten
+* Interaktive Exploration verschiedener Zeiträume
+* Bessere Einordnung von Entwicklungen im Strombereich 
 
 **User Stories**
 
-* Als Fachperson möchte ich den Anteil erneuerbarer Energien über die Zeit sehen, um den Fortschritt zu bewerten
-* Als Fachperson möchte ich strukturelle Brüche identifizieren, um politische Massnahmen zu begründen
-* Als Fachperson möchte ich Visualisierungen direkt nutzen können, um sie in Berichten einzubauen
+* 
+* 
 
 ## Situation Assessment
 
 ### Ressourcen
 
-* Historischer Datensatz (1910 bis 2024, mehrere Energieträger, Einheit TJ)
+* Zusammengeführter Datensatz zum Stromverbrauch und zur Stromerzeugung in der Schweiz
 * Team von drei Personen
-* Tools: R, Python, Pandas, Matplotlib oder Plotly, Quarto, GitHub
+* Tools und Technologien: Python, Pandas, Matplotlib, Streamlit, GitHub und Quarto
 
 ### Einschränkungen
 
-* Begrenzte Projektzeit im Semester
-* Fokus auf Reproduzierbarkeit und Dokumentation
-* Keine Nutzung externer Tools ohne Begründung
+* Begrenzte Projektzeit innerhalb des Semesters
+* Fokus auf Reproduzierbarkeit und nachvollziehbare Dokumentation
+* Keine Nutzung externer Datenquellen ohne klare Begründung
 
 ### Risiken
 
-* Unklare Datenstruktur oder fehlende Werte
-* Überladung der Visualisierung durch zu viele Kategorien
-* Zeitdruck bei Implementierung und Dokumentation
+* Fehlende oder inkonsistente Datenwerte
+* Überladung des Dashboards durch zu viele Visualisierungen
+* Zeitdruck bei Implementierung und Finalisierung
 
 ## Visualization Concept
 
 ### Product Form
 
-Interaktives Dashboard mit ergänzender Data Story
+Interaktives Dashboard 
 
 ### Visual Encodings
 
-* Liniendiagramme für Zeitreihen (zentrale Darstellung)
-* Gestapelte Flächendiagramme zur Darstellung der Zusammensetzung des Gesamtverbrauchs
-* Balkendiagramme für ausgewählte Vergleichsjahre
+* Liniencharts für zeitliche Entwicklungen
+* Scatterplots für Zusammenhänge zwischen Variablen
+* Balkendiagramme für saisonale und monatliche Vergleiche
 
 ### Interactivity
 
-* Auswahl einzelner Energieträger (ein und ausblenden)
-* Auswahl von Zeiträumen (z B Fokus auf bestimmte Jahrzehnte)
-* Tooltips mit exakten Werten in TJ
+* Filter nach Jahren und Zeiträumen
+* Dynamische Legenden
+* Hover-Informationen zu einzelnen Datenpunkten
 
 ### Narrative and Annotation
 
-* Einführung in den Datensatz und Kontext
-* Hervorhebung wichtiger Zeitpunkte (z B starke Zunahmen oder Rückgänge)
-* Annotationen bei erkennbaren Strukturbrüchen
+* Erklärung wichtiger Trends direkt im Dashboard
+* Kurze Kontextinformationen zu saisonalen Entwicklungen
+* Hervorhebung auffälliger Veränderungen im Zeitverlauf
 
 ### Target Medium
 
-* Veröffentlichung als GitHub Page oder Streamlit App
+* Veröffentlichung als Streamlit-Webanwendung
+* Bereitstellung über GitHub
 
 ### Value Contribution
 
 **Cognitive Value**
 
-* Unterstützt das Erkennen langfristiger Trends über mehr als 100 Jahre
-* Ermöglicht Vergleich mehrerer Energieträger gleichzeitig
-* Hebt Strukturveränderungen im Energiesystem hervor
+* Erleichterte Erkennung saisonaler Muster und Trends
+* Unterstützung eines datenbasierten Verständnisses des Stromverbrauchs
 
 **Communicative Value**
 
-* Klare Darstellung komplexer Zeitreihen
-* Unterstützung der Vermittlung von Energieentwicklungen an unterschiedliche Zielgruppen
+* UUnterstützung von Präsentationen und Diskussionen
+* Verständliche Kommunikation komplexer Stromdaten
 
 **Experiential Value**
 
-* Interaktive Exploration fördert Engagement
-* Visuell konsistente Darstellung stärkt Vertrauen in die Daten
+* Interaktive Exploration motiviert zur eigenständigen Analyse
+* Benutzer können unterschiedliche Zeiträume flexibel vergleichen
 
 ## Project Plan
 
@@ -233,15 +462,19 @@ gantt
 
 ## Roles and Contact Details
 
-* Silvan
+* Silvan Herzig
   Rolle: Datenaufbereitung und Analyse
   Aufgaben: Datenbereinigung, explorative Analyse
+  herzisil@students.zhaw.ch
 
-* Salomon
+* Salomon König
   Rolle: Visualisierung und Design
   Aufgaben: Erstellung der Diagramme und Interaktivität
+  koenisal@students.zhaw.ch
 
-* Fabian
+* Fabian Egli
   Rolle: Dokumentation und Integration
   Aufgaben: Quarto Dokumentation, GitHub Setup
+  eglifab4@students.zhaw.ch
+
 
