@@ -1,4 +1,243 @@
 ---
+title: "Project Charta – Stromdashboard Schweiz"
+author: "Team 04 - Fabian Egli, Salomon König und Silvan Herzig"
+date: "2026-03-18"
+format: html
+---
+
+# Project Charta
+
+## Kontext und Scope
+
+Dieses Visualisierungsprojekt untersucht die Entwicklung des Stromverbrauchs in der Schweiz von 1990 bis 2025. Im Zentrum stehen saisonale Muster, langfristige Trends sowie der Zusammenhang zwischen Temperatur, Bevölkerung und Verbrauch. Die Daten stammen aus öffentlich zugänglichen Schweizer Energie- und Wetterquellen und wurden in einem konsolidierten Datensatz zusammengeführt.
+
+Das Visualisierungsprodukt wird als interaktives Streamlit‑Dashboard umgesetzt.  
+Die visuelle Leitidee orientiert sich an einem **Kernkraftwerk‑Reaktor**:
+
+* **Reaktor‑Module** = Analyse‑Seiten  
+* **Orange‑Schwarz‑Palette** = Energie, Hitze, Warnsignal  
+* **Reaktor‑Status** = Kernkraftanteil im Datensatz  
+* **Saisonfilter** = „Betriebsmodi“ des Reaktors  
+* **Trendlinien** = Energiefluss im Reaktor  
+
+Die betrachteten Variablen umfassen:
+
+* Jahr  
+* Monat  
+* Temperatur  
+* Stromerzeugung  
+* Stromverbrauch  
+* Bevölkerung  
+* Saison (Winter, Frühling, Sommer, Herbst)
+
+Zentrale Fragestellungen:
+
+* Wie verändert sich der Stromverbrauch im Jahresverlauf?  
+* Welche saisonalen Unterschiede sind stabil oder verändern sich?  
+* Wie entwickelt sich der Verbrauch im Verhältnis zur Bevölkerung?  
+* Welche Rolle spielen Temperatur und Jahreszeiten?
+
+Der Nutzen liegt in einer intuitiven, interaktiven und visuell starken Darstellung der Schweizer Stromentwicklung.
+
+---
+
+## Project Objectives and Success Criteria
+
+### Objectives (Stakeholder Perspective)
+
+* Darstellung des Stromverbrauchs über die Jahre hinweg  
+* Sichtbarmachung saisonaler Unterschiede und langfristiger Entwicklungen  
+* Bereitstellung eines interaktiven Dashboards zur explorativen Analyse  
+* Integration eines **Reaktor‑Designs** zur narrativen Verstärkung  
+
+### Success Criteria
+
+**Qualitativ**
+
+* Verständliche, klare Visualisierungen  
+* Konsistentes Reaktor‑Design (Farben, Struktur, Metaphern)  
+* Nutzer erkennen Trends, Muster und Zusammenhänge  
+
+**Quantitativ**
+
+* Mindestens 4 aussagekräftige Visualisierungen  
+* Mindestens 2 Interaktionsmöglichkeiten (Filter, Hover, Vergleich)  
+* Reproduzierbare Datenaufbereitung und Dokumentation  
+
+### Out of Scope
+
+* Keine mobile App  
+* Keine Echtzeitdaten  
+* Keine Vorhersagemodelle oder Machine Learning  
+
+---
+
+## Stakeholder Analysis
+
+* **Dozierende** – Bewertung von Methodik, Datenaufbereitung und Visualisierung  
+* **Studierende** – Exploration von Energie- und Wetterdaten  
+* **Öffentlichkeit** – verständliche Darstellung komplexer Stromdaten  
+
+---
+
+## User Analysis
+
+### Persona 1: Student der Wirtschaft oder Umweltwissenschaften
+
+**User Tasks**
+
+* Vergleich saisonaler Unterschiede  
+* Nutzung der Diagramme für Präsentationen  
+* Analyse von Temperatur–Verbrauch‑Zusammenhängen  
+
+**Pains**
+
+* Rohdaten schwer überschaubar  
+* Trends nicht sofort sichtbar  
+* Einflussfaktoren schwer vergleichbar  
+
+**Gains**
+
+* Schnelle Übersicht  
+* Interaktive, verständliche Visualisierungen  
+* Unterstützung für Studienarbeiten  
+
+**User Stories**
+
+* „Ich möchte saisonale Muster erkennen, um sie in meiner Präsentation zu verwenden.“  
+* „Ich möchte Temperatur und Verbrauch vergleichen, ohne selbst Daten aufzubereiten.“  
+
+---
+
+### Persona 2: Energie‑ oder Politikinteressierte Person
+
+**User Tasks**
+
+* Beobachtung langfristiger Entwicklungen  
+* Analyse von Temperatur‑Einflüssen  
+* Vergleich von Winter‑ und Sommerperioden  
+
+**Pains**
+
+* Energiedaten oft komplex und unübersichtlich  
+* Fehlende Interaktivität in klassischen Statistiken  
+* Saisonale Muster in Tabellen kaum erkennbar  
+
+**Gains**
+
+* Verständliche Darstellung komplexer Daten  
+* Interaktive Exploration verschiedener Zeiträume  
+* Bessere Einordnung von Entwicklungen  
+
+**User Stories**
+
+* „Ich möchte sehen, ob die Winter wirklich wärmer werden.“  
+* „Ich möchte verstehen, wie sich die Bevölkerung auf den Verbrauch auswirkt.“  
+
+---
+
+## Situation Assessment
+
+### Ressourcen
+
+* Konsolidierter Datensatz (Stromverbrauch, Erzeugung, Temperatur, Bevölkerung)  
+* Team von drei Personen  
+* Tools: Python, Pandas, Plotly, Streamlit, GitHub, Quarto  
+
+### Einschränkungen
+
+* Begrenzte Projektzeit  
+* Fokus auf Reproduzierbarkeit  
+* Keine externen Datenquellen ohne Begründung  
+
+### Risiken
+
+* Fehlende oder inkonsistente Werte  
+* Überladung des Dashboards  
+* Zeitdruck bei Implementierung  
+
+---
+
+## Visualization Concept
+
+### Produktform
+
+Interaktives Dashboard im **Reaktor‑Design**:
+
+* **Reaktor 1 – Langfristanalyse**  
+* **Reaktor 2 – Verbrauch × Temperatur**  
+* **Reaktor 3 – Korrelation**  
+* **Reaktor 4 – Effizienz / Heizen**  
+
+### Visual Encodings
+
+* Liniencharts für Trends  
+* Scatterplots für Zusammenhänge  
+* Balkendiagramme für saisonale Vergleiche  
+* Reaktor‑Statusanzeige (KKW‑Anteil)  
+
+### Interactivity
+
+* Jahresfilter  
+* Saisonfilter (Winter, Frühling, Sommer, Herbst)  
+* Hover‑Informationen  
+* Vergleichsansichten  
+
+### Narrative and Annotation
+
+* Reaktor‑Metapher zur Strukturierung  
+* Hinweise zu Trends direkt in den Visualisierungen  
+* Hervorhebung von Winterpeaks und Sommerdellen  
+
+### Target Medium
+
+* Streamlit‑Webanwendung  
+* Bereitstellung über GitHub  
+
+### Value Contribution
+
+**Cognitive Value**
+
+* Erkennen saisonaler Muster  
+* Verständnis langfristiger Entwicklungen  
+
+**Communicative Value**
+
+* Unterstützung von Präsentationen  
+* Verständliche Kommunikation komplexer Daten  
+
+**Experiential Value**
+
+* Interaktive Exploration  
+* Reaktor‑Design erzeugt Wiedererkennungswert  
+
+---
+
+## Project Plan
+
+```{mermaid}
+gantt
+    title Project Plan
+    dateFormat YYYY-MM-DD
+    tickInterval 5day
+
+    section Projektverständnis
+        Kontextanalyse :a1, 2026-03-20, 2d
+        Stakeholder und User Analyse :a2, 2026-03-22, 3d
+        Projektcharta finalisieren :a3, 2026-03-25, 2d
+
+    section Datenphase
+        Datenaufbereitung :a4, 2026-03-27, 3d
+        Explorative Analyse :a5, 2026-03-30, 3d
+
+    section Visualisierung
+        Konzept und Design :a6, 2026-04-02, 3d
+        Implementierung :a7, 2026-04-05, 5d
+
+    section Abschluss
+        Dokumentation :a8, 2026-04-10, 2d
+        Präsentation vorbereiten :a9, 2026-04-12, 2d
+---
 title: "Project Charta neu"
 author: "Team 04"
 date: "2026-03-18"
@@ -223,16 +462,19 @@ gantt
 
 ## Roles and Contact Details
 
-* Silvan
+* Silvan Herzig
   Rolle: Datenaufbereitung und Analyse
   Aufgaben: Datenbereinigung, explorative Analyse
+  herzisil@students.zhaw.ch
 
-* Salomon
+* Salomon König
   Rolle: Visualisierung und Design
   Aufgaben: Erstellung der Diagramme und Interaktivität
+  koenisal@students.zhaw.ch
 
-* Fabian
+* Fabian Egli
   Rolle: Dokumentation und Integration
   Aufgaben: Quarto Dokumentation, GitHub Setup
+  eglifab4@students.zhaw.ch
 
 
