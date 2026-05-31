@@ -2,12 +2,12 @@ project:
   type: website
   output-dir: build
 
-lang: en
+lang: de
 language:
-  section-title-appendices: "Appendix"
+  section-title-appendices: "Anhang"
 
 website:
-  title: "Strom"
+  title: "Stromverbrauch Schweiz 1990–2025"
   search: true
   sidebar:
     style: "floating"
@@ -16,6 +16,7 @@ website:
       - index.qmd
       - project_charta.qmd
       - data_report.qmd
+      - viz_design_report.qmd
 
 
 format:
