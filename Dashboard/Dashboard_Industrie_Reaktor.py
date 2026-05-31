@@ -206,6 +206,24 @@ st.markdown("""
         margin-bottom: 0.5rem;
     }
     .block-container { padding-top: 2rem; padding-bottom: 3rem; }
+
+    /* Plotly-Legende: Text leicht naeher an das Symbol heranruecken
+       (geringer Wert, damit Linien-Symbole nicht ueberlappt werden) */
+    .js-plotly-plot .legend .traces .legendtext,
+    .js-plotly-plot .legend g.traces text {
+        transform: translateX(-4px);
+    }
+
+    /* Metric-Labels duerfen umbrechen, statt mit ... abgeschnitten zu werden */
+    [data-testid="stMetricLabel"] > div,
+    [data-testid="stMetricLabel"] p,
+    [data-testid="stMetricLabel"] {
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: unset !important;
+        line-height: 1.25 !important;
+        letter-spacing: 0.06em !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -273,7 +291,7 @@ def season_color(s):
 
 
 ALL_SEASONS    = sorted(df["saison"].dropna().unique().tolist(), key=season_sort_key)
-SEASON_LABELS  = {s: f"{season_icon(s)} {s}" for s in ALL_SEASONS}
+SEASON_LABELS  = {s: f"{s}" for s in ALL_SEASONS}
 LABEL_TO_SEASON = {v: k for k, v in SEASON_LABELS.items()}
 
 
@@ -310,35 +328,15 @@ def style_fig(fig, title=None, height=480):
 
 
 def animated_line(df_plot, x_col, y_col, color=ORANGE, n_frames=25):
-    step = max(1, len(df_plot) // n_frames)
-    frames = []
-    for i in range(step, len(df_plot) + 1, step):
-        sub = df_plot.iloc[:i]
-        frames.append(go.Frame(
-            data=[go.Scatter(x=sub[x_col], y=sub[y_col], mode="lines",
-                             line=dict(color=color, width=2.5, shape="spline"),
-                             name=y_col)],
-            name=str(i),
-        ))
+    # Replay-Animation entfernt — einfache statische Linie.
+    # (Funktionsname und Signatur bleiben, damit die Aufrufe unveraendert
+    # weiter funktionieren.)
     fig = go.Figure(
-        data=[go.Scatter(x=df_plot[x_col], y=df_plot[y_col], mode="lines",
-                         line=dict(color=color, width=2.5, shape="spline"),
-                         name=y_col)],
-        frames=frames,
-        layout=go.Layout(
-            updatemenus=[dict(
-                type="buttons", showactive=False,
-                y=1.15, x=1.0, xanchor="right",
-                bgcolor=SURFACE, bordercolor=ORANGE,
-                font=dict(color=ORANGE, family="Inter, sans-serif", size=11),
-                buttons=[dict(
-                    label="↻ Replay", method="animate",
-                    args=[None, {"frame": {"duration": 35, "redraw": True},
-                                 "fromcurrent": True,
-                                 "transition": {"duration": 0}}],
-                )],
-            )],
-        ),
+        data=[go.Scatter(
+            x=df_plot[x_col], y=df_plot[y_col], mode="lines",
+            line=dict(color=color, width=2.5, shape="spline"),
+            name=y_col,
+        )],
     )
     return fig
 
@@ -391,7 +389,7 @@ with st.sidebar:
     st.markdown("### JAHRESZEIT")
     selected_seasons = []
     for s in ALL_SEASONS:
-        if st.checkbox(f"{season_icon(s)} {s}", value=True, key=f"season_{s}"):
+        if st.checkbox(f"{s}", value=True, key=f"season_{s}"):
             selected_seasons.append(s)
     if not selected_seasons:
         selected_seasons = ALL_SEASONS   # Fallback: alle Saisons
@@ -416,12 +414,25 @@ with st.sidebar:
 
 
 # ── KERNKRAFT-KENNZAHL + REAKTOR-AUSLASTUNG ─────────────────────────────────
+# Regel:
+#   - Enthält der Filter Jahre >= 2000: nur diese (echte Daten) verwenden,
+#     auch wenn der Slider früher startet. Pre-2000-Jahre werden ignoriert.
+#   - Ist der Filter komplett vor 2000: das Jahr 2000 als Proxy nehmen
+#     (mit aktivem Saison-Filter) und durch dessen Monate teilen.
 prod_cols        = [c for c in df.columns if "tromerzeug" in c.lower()]
 prod_col         = prod_cols[0] if prod_cols else "Stromerzeugnisse"
-kkw_gwh          = calc_kkw(df_filtered, df, selected_seasons)
-total_produktion = df_filtered[prod_col].sum()
+
+if (df_filtered["Jahr"] >= 2000).any():
+    df_kkw      = df_filtered[df_filtered["Jahr"] >= 2000].copy()
+    kkw_proxy   = False
+else:
+    df_kkw      = df[(df["Jahr"] == 2000) & (df["saison"].isin(selected_seasons))].copy()
+    kkw_proxy   = True   # Hinweis: ausschliesslich Jahr-2000-Daten als Stellvertreter
+
+kkw_gwh          = df_kkw["Erzeugung_Kernkraftwerk_GWh"].dropna().sum()
+total_produktion = df_kkw[prod_col].sum()
 kkw_anteil       = (kkw_gwh / total_produktion * 100) if total_produktion > 0 else 0
-n_monate         = len(df_filtered)
+n_monate         = len(df_kkw)
 kkw_pro_monat    = (kkw_gwh / n_monate) if n_monate > 0 else 0
 
 # Auslastung anhand des Kernkraft-Anteils an der Gesamtproduktion
@@ -444,6 +455,11 @@ status_ph.markdown(
 )
 
 # Kernkraft-Box (wird im Seitenkopf rechts neben dem Titel gerendert)
+proxy_hint = (
+    "<div style='color:#ffd166; font-size:0.7rem; font-style:italic; "
+    "margin-top:4px;'>Nur Jahr 2000 verfügbar – als Stellvertreter angezeigt</div>"
+    if kkw_proxy else ""
+)
 KKW_BOX_HTML = f"""
 <div style="
     margin-top: 2.0rem; margin-left: auto; width: max-content; max-width: none;
@@ -460,6 +476,7 @@ KKW_BOX_HTML = f"""
          font-weight:400; font-family:'Inter',sans-serif;"> (gesamt)</span></div>
     <div style="color:#9ca3af; font-size:0.74rem;">Ø {kkw_pro_monat:,.0f} GWh / Monat</div>
     <div style="color:#9ca3af; font-size:0.74rem;">{kkw_anteil:.1f} % der Gesamtproduktion in diesem Zeitraum</div>
+    {proxy_hint}
 </div>
 """
 
@@ -498,12 +515,18 @@ if page == "Übersicht":
          - df_filtered["Stromverbrauch"].iloc[:12].mean())
         / df_filtered["Stromverbrauch"].iloc[:12].mean() * 100
     ) if len(df_filtered) > 24 else 0
+    # Heutiger Stromverbrauch = Summe des aktuellsten Jahres im Filter (GWh)
+    if len(df_filtered) > 0:
+        latest_year     = int(df_filtered["Jahr"].max())
+        verbrauch_heute = df_filtered[df_filtered["Jahr"] == latest_year]["Stromverbrauch"].sum()
+    else:
+        verbrauch_heute = 0
 
     c1, c2, c3, c4 = st.columns(4)
-    with c1: st.metric("Bevölkerung heute",  f"{bev_max / 1_000_000:.2f} Mio")
-    with c2: st.metric("Bevölkerung Δ",      f"+{bev_growth:.1f} %")
-    with c3: st.metric("Verbrauch Δ",        f"+{v_growth:.1f} %")
-    with c4: st.metric("Datenpunkte",        f"{len(df_filtered):,}")
+    with c1: st.metric("Bevölkerung heute",          f"{bev_max / 1_000_000:.2f} Mio")
+    with c2: st.metric("Bevölkerungszuwachs in %",   f"+{bev_growth:.1f} %")
+    with c3: st.metric("Heutiger Stromverbrauch",    f"{verbrauch_heute / 1000:.1f} TWh")
+    with c4: st.metric("Verbrauchszuwachs in %",     f"+{v_growth:.1f} %")
 
     st.markdown("")
 
@@ -524,7 +547,7 @@ if page == "Übersicht":
             df_trend["Trend"] = df_trend["Stromverbrauch"]
 
         if not all_seasons_selected:
-            seasons_str = "  ".join([f"{season_icon(s)} {s}" for s in selected_seasons])
+            seasons_str = "  ".join([f"{s}" for s in selected_seasons])
             st.info(f"Filter aktiv: {seasons_str}  ·  {window}-Monats-Trend")
 
         fig = animated_line(df_trend, "Datum", "Trend", color=ORANGE)
@@ -588,7 +611,7 @@ elif page == "Verbrauch × Temperatur":
     ].mean().reset_index()
 
     if not all_seasons_selected:
-        seasons_str = "  ".join([f"{season_icon(s)} {s}" for s in selected_seasons])
+        seasons_str = "  ".join([f"{s}" for s in selected_seasons])
         st.info(f"Filter aktiv: {seasons_str} — Jahresmittel nur aus gewählten Monaten")
 
     df_wachstum = df_year[df_year["Jahr"] <= 2008]
@@ -599,7 +622,7 @@ elif page == "Verbrauch × Temperatur":
         c1, c2, c3 = st.columns(3)
         with c1: st.metric("Ø Temp · Wachstumsphase", f"{t_wachstum:.2f} °C", help="1990–2008")
         with c2: st.metric("Ø Temp · Sättigungsphase", f"{t_saett:.2f} °C", help="ab 2009")
-        with c3: st.metric("Erwärmung Δ", f"{t_saett - t_wachstum:+.2f} °C")
+        with c3: st.metric("Erwärmung", f"{t_saett - t_wachstum:+.2f} °C")
         st.markdown("")
 
     fig = go.Figure()
@@ -716,7 +739,7 @@ elif page == "Korrelation":
             sub = df_sc[df_sc["saison"] == s].dropna(subset=[Y_COL])
             fig.add_trace(go.Scatter(
                 x=sub[temp_col], y=sub[Y_COL], mode="markers",
-                name=f"{season_icon(s)} {s}",
+                name=f"{s}",
                 marker=dict(size=10, color=season_color(s), opacity=0.75,
                             line=dict(color=BG, width=1.2)),
                 hovertemplate=(
@@ -755,7 +778,9 @@ elif page == "Effizienz / Heizen":
         "Wurden wir sparsamer — oder war es nur wärmer? Der Heizbedarf "
         "(≈ Heizgradtage aus den Temperaturdaten) rechnet den Wettereffekt heraus. "
         "Kennzahl = Stromverbrauch pro Kopf je Heizbedarf-Einheit. Sinkt sie, "
-        "brauchen wir bei gleicher Kälte weniger Strom — ein echter Effizienzgewinn.",
+        "brauchen wir bei gleicher Kälte weniger Strom — ein echter Effizienzgewinn. "
+        "Die Daten sind erst ab 1994 verfügbar, diejenigen von 1990 bis 1993 sind "
+        "durch ein Regressionsmodell geschätzt.",
     )
 
     # Nur Heizmonate (echter Heizbedarf) → Effizienz = Verbrauch/Kopf je Heizbedarf
@@ -766,7 +791,7 @@ elif page == "Effizienz / Heizen":
     if len(df_eff) < 2 or df_eff["Jahr"].nunique() < 2:
         st.warning(
             "Zu wenig Heizmonate im aktuellen Filter. Bitte mindestens eine kältere "
-            "Jahreszeit (❄️ Winter / 🍂 Herbst / 🌸 Frühling) und einen breiteren "
+            "Jahreszeit (Winter / Herbst / Frühling) und einen breiteren "
             "Zeitraum auswählen."
         )
     else:
@@ -777,23 +802,27 @@ elif page == "Effizienz / Heizen":
                    .reset_index())
 
         # KPIs: erste vs. letzte verfügbare Dekade
-        early   = g[g["Jahr"] <= g["Jahr"].min() + 9]["Effizienz"].mean()
-        late    = g[g["Jahr"] >= g["Jahr"].max() - 9]["Effizienz"].mean()
-        delta   = (late - early) / early * 100 if early else 0
-        h_early = g[g["Jahr"] <= g["Jahr"].min() + 9]["Heizbedarf"].mean()
-        h_late  = g[g["Jahr"] >= g["Jahr"].max() - 9]["Heizbedarf"].mean()
+        # Phasen-Split bei 2008 / 2009 (analog zu Verbrauch × Temperatur)
+        g_wachstum = g[g["Jahr"] <= 2008]
+        g_saett    = g[g["Jahr"] >= 2009]
+        eff_w      = g_wachstum["Effizienz"].mean() if len(g_wachstum) else float("nan")
+        eff_s      = g_saett["Effizienz"].mean()    if len(g_saett)    else float("nan")
+        # Heizbedarf über ALLE Monate im Filter (inkl. Sommer mit Heizbedarf ≈ 0)
+        heiz_avg   = df_filtered["Heizbedarf"].mean()
 
         c1, c2, c3 = st.columns(3)
         with c1:
-            st.metric("Effizienz · frühe Jahre", f"{early:.2f}",
-                      help="kWh/Kopf je Heizbedarf-Einheit")
+            st.metric(
+                "Effizienz (bis 2008)",
+                f"{eff_w:.2f}" if not pd.isna(eff_w) else "—",
+            )
         with c2:
-            st.metric("Effizienz · letzte Jahre", f"{late:.2f}",
-                      delta=f"{delta:+.1f} %", delta_color="inverse",
-                      help="negativ = sparsamer bei gleicher Kälte")
+            st.metric(
+                "Effizienz (ab 2009)",
+                f"{eff_s:.2f}" if not pd.isna(eff_s) else "—",
+            )
         with c3:
-            st.metric("Heizbedarf Δ", f"{h_late - h_early:+.0f}",
-                      help="Heizgradtage: negativ = mildere Winter")
+            st.metric("Ø Heizbedarf pro Monat", f"{heiz_avg:.2f}")
         st.markdown("")
 
         fig = go.Figure()
@@ -813,6 +842,7 @@ elif page == "Effizienz / Heizen":
                 x=g["Jahr"], y=p(g["Jahr"]), mode="lines",
                 name=f"Trend ({z[0]:+.3f}/Jahr → {richtung})",
                 line=dict(color=AMBER, width=2, dash="dash"),
+                hovertemplate="<b>Trend</b><br>%{x}: %{y:.2f}<extra></extra>",
             ))
         fig.update_layout(
             xaxis=dict(title="Jahr"),
