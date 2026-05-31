@@ -19,24 +19,29 @@ Typischerweise werden in der explorativen Analyse der erfassten Rohdaten Qualit�
 
 : Übersicht der im Projekt verwendeten Rohdatensätze. {#tbl-raw-overview}
 
-| Name | Quelle | Speicherort |
-|------|--------|--------------|
-| **Data_Strom.xlsx** | Zusammengeführte Strom- und Wetterdaten Schweiz (Rohdaten) | Lokale Projektstruktur /data |
-| **ogd105_heizgradtage.csv** | Bundesamt für Energie (BFE) – Heizgradtage | Offene Energiedaten BFE |
+| Name | Quelle | Speicherort | Details |
+|------|--------|--------------|---------|
+| **Data_Strom.xlsx** | Zusammengeführte Strom- und Wetterdaten Schweiz | Lokale Projektstruktur `/data` | Stromverbrauch, Stromerzeugung, Temperatur, Bevölkerung, Heizbedarf (teilweise fehlend), Deckungsgrad |
+| **ogd105_heizgradtage.csv** | Bundesamt für Energie (BFE) – Heizgradtage | Offene Energiedaten BFE | Offizielle Heizgradtage 1994–2025, monatlich, Grundlage für Heizbedarf |
+| **ogd35_schweizerische_elektrizitaetsbilanz_monatswerte.csv** | BFE – Elektrizitätsbilanz | Offene Energiedaten BFE | Detaillierte Erzeugungsdaten (Wasser, Kernkraft, PV, Wind), Importe/Exporte |
+| **climate-data-swissmean_regSwiss_1.4.txt** | MeteoSchweiz – homogenisierte Temperaturreihen | MeteoSchweiz / OGD | Schweizweite Monatsmitteltemperaturen 1864–2026, homogenisiert |
+| **px-x-0102030000_101_20260408-111207.csv** | Bundesamt für Statistik (BFS) – Bevölkerung | BFS PX-Web | Jahresbevölkerung CH 1986–2024, nach Geschlecht |
 
 ---
 
-## Details Datensatz 1: *Data_Strom.xlsx*
+# Details zu den Rohdatensätzen
+
+## **Datensatz 1: *Data_Strom.xlsx***
 
 - Enthält monatliche Stromverbrauchs- und Stromerzeugungsdaten der Schweiz (1990–2025)
-- Zusätzlich enthalten: Temperaturdaten, Bevölkerungszahlen, Heizbedarf, Deckungsgrad
-- Datenquelle: Kombination aus öffentlich zugänglichen Energiedaten und historischen Wetterdaten
-- Beschaffung: Datei wurde bereitgestellt und manuell in das Projekt integriert
-- Rechtliches: Daten basieren auf öffentlich zugänglichen Quellen (BFE, MeteoSchweiz)
-- Governance: Daten sind **öffentlich**, keine personenbezogenen Daten
-- Variablentypen:
-  - **Zielgrößen**: Stromverbrauch, Stromverbrauch pro Kopf
-  - **Einflussgrößen**: Temperatur, Heizgradtage, Bevölkerung, Saison
+- Zusätzlich enthalten: Temperaturdaten, Bevölkerungszahlen, Heizbedarf (teilweise fehlend), Deckungsgrad
+- Datenquelle: Kombination aus BFE-Daten, MeteoSchweiz-Daten und manuell bereitgestellten Tabellen
+- Governance: **öffentlich**, keine personenbezogenen Daten
+- Qualitätsmerkmale:
+  - Bevölkerungszahlen als Strings formatiert
+  - Fehlende Heizgradtage 1990–1993
+  - Uneinheitliche Monatsnamen
+  - Teilweise fehlende oder inkonsistente Werte
 
 ### Datenkatalog
 
@@ -47,7 +52,7 @@ Typischerweise werden in der explorativen Analyse der erfassten Rohdaten Qualit�
 | 1 | Jahr | Integer | 1990–2025 | Kalenderjahr |
 | 2 | Monat | String | jan–dec | Monatskürzel |
 | 3 | saison | String | Winter/Frühling/Sommer/Herbst | Jahreszeit |
-| 4 | Temperatur (C°) | Float | ca. –5 bis 20 | Durchschnittstemperatur |
+| 4 | Temperatur (C°) | Float | –5 bis 20 | Monatsmitteltemperatur |
 | 5 | Stromerzeugnisse | Integer | >0 | Gesamte Stromproduktion |
 | 6 | Stromverbrauch | Integer | >0 | Gesamter Stromverbrauch |
 | 7 | Bevölkerung | String/Integer | 6.7–9.0 Mio | Einwohnerzahl |
@@ -58,6 +63,67 @@ Typischerweise werden in der explorativen Analyse der erfassten Rohdaten Qualit�
 
 ---
 
+## **Datensatz 2: *ogd105_heizgradtage.csv***
+
+- Enthält offizielle Heizgradtage (HGT) der Schweiz, monatlich, 1994–2025
+- Herausgeber: Bundesamt für Energie (BFE)
+- Governance: **öffentlich**, frei nutzbar
+- Qualitätsmerkmale:
+  - Vollständig ab 1994
+  - Keine fehlenden Werte
+  - Einheitliches Format (Jahr, Monat, Heizgradtage)
+- Bedeutung im Projekt:
+  - Grundlage für Heizbedarf in *Data_Strom_korrigiert.xlsx*
+  - Diente als Trainingsbasis für das Regressionsmodell zur Imputation 1990–1993
+
+---
+
+## **Datensatz 3: *ogd35_schweizerische_elektrizitaetsbilanz_monatswerte.csv***
+
+- Enthält detaillierte Stromerzeugungsdaten der Schweiz (2000–2026)
+- Variablen:
+  - Erzeugung nach Kraftwerkstyp (Wasser, Speicher, Kernkraft, PV, Wind, thermisch)
+  - Importe / Exporte
+  - Landesverbrauch
+  - Endverbrauch
+- Governance: **öffentlich**, BFE Open Data
+- Qualitätsmerkmale:
+  - Sehr hohe Granularität
+  - Teilweise Nullwerte bei PV/Wind in frühen Jahren
+  - Ab 2020 revidierte Werte
+- Bedeutung im Projekt:
+  - Ergänzt *Data_Strom_korrigiert.xlsx* um **Erzeugung_Kernkraftwerk_GWh**
+
+---
+
+## **Datensatz 4: *climate-data-swissmean_regSwiss_1.4.txt***
+
+- Homogenisierte schweizweite Monatsmitteltemperaturen (1864–2026)
+- Herausgeber: MeteoSchweiz
+- Governance: **öffentlich**, wissenschaftlich zitierbar
+- Qualitätsmerkmale:
+  - Homogenisierte Zeitreihe (Begert & Frei 2018)
+  - Enthält saisonale und jährliche Aggregationen
+  - Keine fehlenden Werte außer jüngste Monate (provisorisch)
+- Bedeutung im Projekt:
+  - Validierung der Temperaturwerte in *Data_Strom.xlsx*
+  - Kontext für langfristige Klimatrends
+
+---
+
+## **Datensatz 5: *px-x-0102030000_101_20260408-111207.csv***
+
+- Jahresbevölkerung der Schweiz (1986–2024), nach Geschlecht
+- Herausgeber: Bundesamt für Statistik (BFS)
+- Governance: **öffentlich**
+- Qualitätsmerkmale:
+  - Vollständig und konsistent
+  - Jährliche Werte → mussten für Monatsdaten interpoliert werden
+- Bedeutung im Projekt:
+  - Grundlage für Bevölkerungsvariable in *Data_Strom.xlsx*
+  - Diente zur Berechnung von *Stromverbrauch pro Kopf*
+
+---
 ## Datencharakteristik und Qualität
 
 Die explorative Datenanalyse (EDA) umfasst:
@@ -95,7 +161,7 @@ Die explorative Datenanalyse (EDA) umfasst:
 | Name | Quelle | Speicherort |
 |------|--------|--------------|
 | **Data_Strom_korrigiert.xlsx** | Bereinigte und angereicherte Version von Data_Strom.xlsx | /data/processed |
-| **ogd35_schweizerische_elektrizitaetsbilanz_monatswerte.csv** | BFE – Elektrizitätsbilanz | /data/external |
+| **Data_Strom_mit_HGT.xlsx** | Version mit imputierten Heizgradtagen 1990–1993 | /data/processed |
 
 ---
 
@@ -110,9 +176,18 @@ Dieser Datensatz ist die bereinigte und erweiterte Version der Rohdaten. Er enth
   - Heizbedarf (aus BFE-Daten ergänzt)
   - Deckungsgrad
 - Harmonisierung der Monatsnamen
-- Hinzufügen einer Datumsspalte
 - Entfernen fehlerhafter Zeilen (z. B. Jahr 2026)
+- Ergänzung der Kernkraftwerksproduktion aus *ogd35*
 
+### Wichtiger Hinweis zur Heizbedarf‑Imputation  
+Die Heizgradtage 1990–1993 wurden mithilfe eines **linearen Regressionsmodells** geschätzt:
+
+- Features: Temperatur, Tage pro Monat, Sinus/Cosinus des Monats  
+- Trainingsdaten: echte HGT 1994–2025  
+- Modellgüte:  
+  - R² ≈ **0.97**  
+  - MAE ≈ **22 HGT**  
+- Transparenz: Spalte **Heizbedarf_quelle** markiert *MeteoSchweiz* vs. *geschätzt*
 ### Gründe für die Verarbeitung
 - Sicherstellung numerischer Konsistenz
 - Zusammenführung externer Datenquellen (Heizgradtage, Elektrizitätsbilanz)
