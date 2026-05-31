@@ -1,0 +1,170 @@
+---
+title: "Visualisierungsprojekt – Stromverbrauch Schweiz"
+author: "Gruppe 04"
+format: revealjs
+theme: serif
+---
+
+# Thema & Hauptziel
+
+## **Thema**
+
+Stromverbrauch in der Schweiz\
+→ zeitliche und saisonale Trends sichtbar machen und analysieren
+
+## **Hauptziel**
+
+Ein interaktives Dashboard, das:
+
+-   Trends über die Jahre zeigt\
+-   saisonale Unterschiede klar macht\
+-   Zusammenhänge (Temperatur, Bevölkerung, Verbrauch) analysiert und einordnet
+
+------------------------------------------------------------------------
+
+# Leitfragen
+
+-   Wie entwickelt sich der Verbrauch im Verhältnis zur Bevölkerung?\
+-   Wie stark korreliert der Stromverbrauch mit den Witterungsbedingungen?\
+-   Sind wir trotz Bevölkerungswachstum und wärmerer Temperaturen tatsächlich effizienter geworden?
+
+------------------------------------------------------------------------
+
+# Zielgruppe
+
+## **Primäre Zielgruppen**
+
+-   Studierende (Wirtschaft, Umwelt, Energie)
+-   Fachpersonen aus Energie/Politik
+
+## **Bedürfnisse**
+
+-   schnelle Übersicht\
+-   klare Trends\
+-   einfache Interaktion\
+-   nachvollziehbare Visualisierungen
+
+------------------------------------------------------------------------
+
+# Narrative Elemente
+
+## **Narrative Leitidee**
+
+„Wie verändert sich unser Stromverbrauch – und was treibt diese Veränderungen?"
+
+## **Umsetzung**
+
+-   **Visualisierungen:** Liniencharts, Scatterplots, Trendlinien\
+-   **Interaktivität:** Filter (Jahreszeit, Zeitraum), Hover-Tooltips, klickbare Legenden\
+-   **Dramatisierung:** Reaktor-/Kommandozentralen-Optik, Era-Markierungen (Wachstum vs. Sättigung), Kernkraft-Statusanzeige\
+-   **Rhetorik:** Effizienz-Hypothese als roter Faden, klare Era-Begriffe („Wachstumsphase", „Sättigungsphase")\
+-   **Annotationen:** Untertitel & Captions auf jeder Seite, Hinweise auf geschätzte Daten
+
+------------------------------------------------------------------------
+
+# Erwartetes Feedback
+
+## **1. Verständlichkeit**
+
+-   Ist die Story (Effizienz-Hypothese) klar?\
+-   Sind die Visualisierungen intuitiv?
+
+## **2. Interaktivität**
+
+-   Sind die Interaktionen sinnvoll eingesetzt, oder werden sie zu wenig genutzt?\
+-   Helfen Filter und Hover, die Daten zu erkunden?
+
+## **3. Visual Encoding**
+
+-   Passen Diagrammtypen, Farben, Achsen?\
+-   Wirkt das Reaktor-Design unterstützend oder ablenkend?\
+-   Wird der Fokus auf die Visualisierungen durch die Kennzahlen gestört?
+
+## **4. Methodik**
+
+-   Sind Heizbedarf-Schätzung (1990–1993) und Effizienz-Kennzahl nachvollziehbar?\
+-   Wird mit den Datenlücken transparent umgegangen?
+
+------------------------------------------------------------------------
+
+# Datenquellen
+
+## **Verbrauch & Erzeugung**
+
+Bundesamt für Energie (BFE) — Schweizerische Elektrizitätsstatistik,
+Monatsdaten ab 1990 (OGD)
+
+## **Witterung**
+
+MeteoSchweiz — Heizgradtage, Monatswerte\
+(ab 1994; davor regressionsbasiert geschätzt)
+
+## **Bevölkerung**
+
+Bundesamt für Statistik (BFS) — Jahresbevölkerung Schweiz 1990–2025
+
+## **Kernkraft**
+
+BFE OGD35 — Schweizerische Elektrizitätsbilanz, Monatswerte (ab 2000)
+
+------------------------------------------------------------------------
+
+# Was haben wir erreicht?
+
+## **Quantitativ**
+
+-   4 Module im Dashboard (Übersicht, Verbrauch × Temperatur, Korrelation, Effizienz)\
+-   Mehrere Interaktionen (Zeitbereich, Jahreszeiten-Filter, Hover, Legenden-Toggle)\
+-   Reproduzierbar via GitHub + dokumentiert in Quarto-Webseite
+
+## **Qualitativ**
+
+-   Klare Story: Effizienz-Hypothese\
+-   Bezug zum Strom mit konsistenter Reaktor-Optik\
+-   Transparenter Umgang mit Datenlücken (Heizbedarf-Regression)
+
+------------------------------------------------------------------------
+
+# Team & Rollen
+
+::: {.columns}
+::: {.column width="33%"}
+### **Silvan**
+
+*Datenaufbereitung & Analyse*
+
+Datenbereinigung, EDA, Strukturierung
+:::
+
+::: {.column width="33%"}
+### **Salomon**
+
+*Visualisierung & Design*
+
+Diagramme, Interaktivität, Dashboard
+:::
+
+::: {.column width="34%"}
+### **Fabian**
+
+*Dokumentation & Integration*
+
+Quarto, GitHub, Struktur & Zusammenführung
+:::
+:::
+
+------------------------------------------------------------------------
+
+# Vielen Dank {.center}
+
+::: {style="text-align: center;"}
+**Dashboard live:** <http://localhost:8501> (Demo zeigen)
+
+**Dokumentation:** <https://vdss-fs26-ds25a.github.io/Visualisation-Projekt-Gruppe-4/>
+
+**Code:** <https://github.com/vdss-fs26-ds25a/Visualisation-Projekt-Gruppe-4>
+
+\
+
+**Fragen?**
+:::
